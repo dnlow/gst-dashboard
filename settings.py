@@ -1,4 +1,4 @@
-# Django settings for cad_log_viewer project.
+# Django settings for DjangoCAD project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -12,9 +12,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'cad_log_viewer',
-        'USER': 'cfadmin',
-        'PASSWORD': 'calfire3400',
+        'NAME': 'DjangoCAD',
+        'USER': 'corey',
+        'PASSWORD': 'springer90',
         'HOST': '',
         'PORT': '',
     }
@@ -95,7 +95,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'cad_log_viewer.urls'
+ROOT_URLCONF = 'DjangoCAD.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
