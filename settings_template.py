@@ -4,7 +4,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Corey Farwell', 'coreyf@rwell.org'),
+    ('FirstName LastName', 'your@email.here'),
 )
 
 MANAGERS = ADMINS
@@ -12,9 +12,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'DjangoCAD',
-        'USER': 'corey',
-        'PASSWORD': 'springer90',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': '',
         'PORT': '',
     }
