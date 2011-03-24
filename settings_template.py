@@ -113,8 +113,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.gis',
     'logs',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
 )
 
 # A sample logging configuration. The only tangible logging
