@@ -8,5 +8,5 @@ urlpatterns = patterns('',
     #(r'^logs/', 'logs.views.test'),
     #(r'^feed/', CADGeoRSS()),
     (r'^admin/', include(admin.site.urls)),
-    (r'^feed/', 'django.contrib.syndication.views.feed', {'feed_dict': feed_dict}),
+    (r'^feed/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feed_dict}),
 )
