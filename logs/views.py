@@ -1,4 +1,6 @@
 from django.http import HttpResponse
+from models import Incident
 
-def test(request):
-    return HttpResponse("Hell, world. You're on my test page!");
+def incidentInfo(request, incident_id):
+    incident = Incident.objects.get(name=incident_id)
+    return HttpResponse(incident.name + " - " + str(incident.location))

@@ -5,8 +5,7 @@ from logs.feeds import CADGeoRSS
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    #(r'^logs/', 'logs.views.test'),
-    #(r'^feed/', CADGeoRSS()),
-    (r'^admin/$', include(admin.site.urls)),
-    (r'^feed/$', CADGeoRSS()),
+    (r'^incident/(?P<incident_id>\w+)/$', 'logs.views.incidentInfo'),
+    # (r'^feed/$', CADGeoRSS()),
+    (r'^admin/', include(admin.site.urls)),
 )
