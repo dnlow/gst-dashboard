@@ -17,7 +17,3 @@ class CADGeoRSS(Feed):
  
     def item_geometry(self, item):
         return item.location
-
-feed_dict = {
-    'georss' : CADGeoRSS,
-}
