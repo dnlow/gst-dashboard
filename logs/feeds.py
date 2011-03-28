@@ -12,8 +12,15 @@ class CADGeoRSS(Feed):
     def item_title(self, item):
         return item.name
 
+    def item_description(self, item):
+        return "meow lol"
+
     def item_link(self, item):
-        return "/incident/%s" % item.name
+        return "http://cfslo.selfip.org:9000/incident/%s" % item.name
  
     def item_geometry(self, item):
         return item.location
+
+feed_dict = {
+    'georss' : CADGeoRSS,
+}
