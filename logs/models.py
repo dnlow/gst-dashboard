@@ -5,3 +5,4 @@ class Incident(models.Model):
     eventType = models.CharField(max_length=6)
     location = models.PointField()
     time = models.DateTimeField()
+    city = models.CharField(max_length=10)

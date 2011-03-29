@@ -17,9 +17,7 @@ class Command(BaseCommand):
                 fields = line.split('|') 
                 if len(fields) > 9 and fields[7] and fields[8]:
                     if 'SLU' in fields[2] and 'OOA' not in fields[5]:
-                        if not Incident.objects.filter(id=fields[1]):
-                            name = fields[1]
+                        if not Incident.objects.filter(name=fields[1]):
                             pnt = Point(float(fields[7]),float(fields[8]))
-                            eventType = fields[5]
                             time = datetime.datetime.strptime(fields[4], '%Y%m%d%H%M%S')
-                            Incident(name=id, eventType=type, location=pnt, time=time).save()
+                            Incident(name=fields[1], eventType=fields[5], location=pnt, time=time, city=fields[10]).save()
