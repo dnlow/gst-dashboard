@@ -33,8 +33,7 @@ class Command(BaseCommand):
                             kwargs['details'] = fields[6]
                             kwargs['category'] = it[fields[5]][0]
                             kwargs['time'] = datetime.datetime.strptime(fields[4], '%Y%m%d%H%M%S')
-                            kwargs['latlng'] = Point(float(fields[7]),float(fields[8]), srid=4269)
-                            kwargs['latlng'].transform(900913)
+                            kwargs['latlng'] = Point(float(fields[7]),float(fields[8]))
                             kwargs['address'] = fields[9]
                             kwargs['jrsdtn'] = fields[10]
                             line = tmp.get(name, '') + line

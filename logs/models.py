@@ -6,7 +6,7 @@ class Incident(models.Model):
     details = models.CharField(max_length=50)
     category = models.CharField(max_length=15)
     time = models.DateTimeField()
-    latlng = models.PointField()
+    latlng = models.PointField(srid=4269)
     address = models.CharField(max_length=100)
     jrsdtn = models.CharField(max_length=10)
     log = models.TextField()
