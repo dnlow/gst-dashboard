@@ -13,7 +13,7 @@ class CADGeoRSS(Feed):
         return item.name
 
     def item_description(self, item):
-        return "%s @ %s(%s)" % (item.details, jrsdtn, item.time)
+        return "%s @ %s(%s)" % (item.details, item.jrsdtn, item.time)
 
     def item_link(self, item):
         return "http://cfslo.selfip.org:9000/incident/%s" % item.name
