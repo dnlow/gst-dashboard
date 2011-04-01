@@ -2,12 +2,12 @@ from django.contrib.gis.feeds import Feed
 from models import Incident
 
 class CADGeoRSS(Feed):
-    title = "CAD GeoRSS"
+    title = "San Luis Obispo Incident Data"
     link = "http://cfslo.selfip.org/"
-    description = "Latest CAD incidents"
+    description = "Latest 100 incidents"
     
     def items(self):
-        return Incident.objects.all()
+        return Incident.objects.order_by('-time')[:100]
         
     def item_title(self, item):
         return item.name
