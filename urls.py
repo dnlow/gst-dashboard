@@ -5,8 +5,7 @@ from logs.feeds import feed_dict
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    #(r'^logs/', 'logs.views.test'),
-    #(r'^feed/', CADGeoRSS()),
+    (r'^incident/(?P<incident_id>\w+)/$', 'logs.views.incidentInfo'),
+    (r'^feed/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feed_dict}),
     (r'^admin/', include(admin.site.urls)),
-    (r'^feed/', 'django.contrib.syndication.views.feed', {'feed_dict': feed_dict}),
 )
