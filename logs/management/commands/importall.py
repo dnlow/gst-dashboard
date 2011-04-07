@@ -23,10 +23,10 @@ class Command(BaseCommand):
             it[line[1]] = line[0]
 
         # Populate incidents from logs
-        logs = os.listdir('data/stripped/')
+        logs = os.listdir('/home/cfadmin/corey/DjangoCAD/data/stripped/')
         for log in logs:
             if fnmatch(log, '*_Log.txt'):
-                f = open('data/stripped/' + log, 'r')
+                f = open('/home/cfadmin/corey/DjangoCAD/data/stripped/' + log, 'r')
                 for line in f.readlines():
                     fields = line.split('|') 
                     name = fields[1]
