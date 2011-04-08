@@ -7,7 +7,7 @@ class Command(BaseCommand):
     help = 'Removes unhelpful entries from the logs'
 
     def handle(self, *args, **options):
-        for log in os.listdir('data/raw/'):
+        for log in os.listdir('/home/cfadmin/corey/DjangoCAD/data/raw/'):
             if fnmatch(log, '*.txt'):
                 raw = open('/home/cfadmin/corey/DjangoCAD/data/raw/' + log, 'r+')
                 stripped = open('/home/cfadmin/corey/DjangoCAD/data/stripped/' + log, 'w')

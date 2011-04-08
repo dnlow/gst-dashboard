@@ -18,7 +18,7 @@ class Command(BaseCommand):
         incidents = dict()
 
         # Populate incident types
-        types = csv.reader(open('etc/incidentTypes.csv', 'r'))
+        types = csv.reader(open('/home/cfadmin/corey/DjangoCAD/etc/incidentTypes.csv', 'r'))
         for line in types:
             it[line[1]] = line[0]
 
@@ -31,8 +31,8 @@ class Command(BaseCommand):
                     fields = line.split('|') 
                     name = fields[1]
                     category = it.get(fields[5], 'Other')
-                    if name in allincidents:
-                        allincidents[name].log += line 
+                    if name in incidents:
+                        incidents[name].log += line 
                     elif category != "Other":
                         kwargs['name'] = name
                         kwargs['type'] = fields[5]
