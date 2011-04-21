@@ -56,6 +56,7 @@ class Command(BaseCommand):
             try:
                 prev = Incident.objects.get(name=name)
                 if prev != curr:
+                    prev.delete()
                     curr.save()
             except Incident.DoesNotExist:
                 curr.save()
