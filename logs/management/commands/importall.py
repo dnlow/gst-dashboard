@@ -18,15 +18,15 @@ class Command(BaseCommand):
         incidents = dict()
 
         # Populate incident types
-        types = csv.reader(open('/home/cfadmin/corey/DjangoCAD/etc/incidentTypes.csv', 'r'))
+        types = csv.reader(open('etc/incidentTypes.csv', 'r'))
         for line in types:
             it[line[1]] = line[0]
 
         # Populate incidents from logs
-        logs = os.listdir('/home/cfadmin/corey/DjangoCAD/data/stripped/')
+        logs = os.listdir('data/stripped/')
         for log in logs:
             if fnmatch(log, '*_Log.txt'):
-                f = open('/home/cfadmin/corey/DjangoCAD/data/stripped/' + log, 'r')
+                f = open('data/stripped/' + log, 'r')
                 for line in f.readlines():
                     fields = line.split('|') 
                     name = fields[1]
