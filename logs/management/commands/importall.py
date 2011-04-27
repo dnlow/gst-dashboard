@@ -44,7 +44,6 @@ class Command(BaseCommand):
                         kwargs['jrsdtn'] = fields[10]
                         line = tmp.get(name, '') + line
                         kwargs['log'] = line 
-                        kwargs['fromFile'] = log
                         incidents[name] = Incident(**kwargs)
                     else:
                         tmp[name] = tmp.get(name, '') + line
