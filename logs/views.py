@@ -1,7 +1,7 @@
 from models import Incident
 from django.shortcuts import render
-from django.utils import simplejson
 from django.http import HttpResponse
+import json
 
 def incidentInfo(request, incident_id):
     incident = Incident.objects.get(name=incident_id)
@@ -12,12 +12,19 @@ def viewer(request):
     return render(request, 'viewer.html', {"incidents": incidents})
 
 def json_incident(request):
-    incidents = Incident.objects.all()
-    return HttpResponse(incidents.geojson().all()[0].latlng.geojson, mimetype='application/json')
-    '''
-    result = []
-    incidents = Incident.objects.order_by('-time')[:100]
-    for i in incidents:
-        result.append({'id':i.name, 'jrsdtn':i.jrsdtn, 'category':i.category})
-    return HttpResponse(simplejson.dumps(result), mimetype='application/json')
-    '''
+    features = []
+    root = {}
+    incidents = Incident.objects.geojson().order_by('-time')[:100]
+    root['type'] = "FeatureCollection"
+    root['features'] = features
+    for incident in incidents:
+       feature = {}
+       properties = {}
+       feature['type'] = "Feature"
+       feature['geometry'] = json.loads(incident.latlng.geojson)
+       feature['properties'] = properties
+       properties['name'] = incident.name
+       properties['jrsdtn'] = incident.jrsdtn
+       properties['category'] = incident.category
+       features.append(feature)
+    return HttpResponse(json.dumps(root), mimetype='application/json')
