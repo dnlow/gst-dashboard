@@ -10,7 +10,6 @@ class Incident(models.Model):
     address = models.CharField(max_length=100)
     jrsdtn = models.CharField(max_length=10)
     log = models.TextField()
-    fromFile = models.CharField(max_length=20) #phase this out eventually
 
     def __eq__(self, other):
         return (self.log == other.log and
@@ -22,5 +21,4 @@ class Incident(models.Model):
                 self.latlng == other.latlng and
                 self.address == other.address and
                 self.jrsdtn == other.jrsdtn and
-                self.fromFile == other.fromFile and
                 self.name == other.name)
