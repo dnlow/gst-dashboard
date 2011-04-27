@@ -10,6 +10,7 @@ class Incident(models.Model):
     address = models.CharField(max_length=100)
     jrsdtn = models.CharField(max_length=10)
     log = models.TextField()
+    objects = models.GeoManager()
 
     def __eq__(self, other):
         return (self.log == other.log and
