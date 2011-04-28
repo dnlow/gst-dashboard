@@ -1,22 +1,15 @@
-<html>
-    <head>
-        <title>Stateful Array Grid Example</title>
-        <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}extjs/resources/css/ext-all.css" />
-        <script type="text/javascript" src="{{STATIC_URL}}extjs/bootstrap.js"></script>
-        <script type="text/javascript" src="{{STATIC_URL}}viewer.js"></script>
-        <script type="text/javascript">
-            store.add(
-            {% for incident in incidents %}
-            { 
-                id: "{{incident.name}}", 
-                jrsdtn: "{{incident.jrsdtn}}",
-                category: "{{incident.category}}",
-                date: "2010-01-01 12:00" 
-            } {% if not forloop.last %},{% endif %}
-            {% endfor %});
-        </script>
-    </head>
-    <body>
-        <div id="grid-example"></div>
-    </body>
-</html>
+<html> 
+   <head> 
+      <title>CalFire Incident Mapper</title> 
+      <script src="http://extjs.cachefly.net/ext-3.2.1/adapter/ext/ext-base.js"></script>
+      <script src="http://extjs.cachefly.net/ext-3.2.1/ext-all.js"></script>
+      <link rel="stylesheet" type="text/css" href="http://extjs.cachefly.net/ext-3.2.1/resources/css/ext-all.css" /> 
+      <script src="{{STATIC_URL}}js/openlayers/OpenLayers.js"></script>
+      <script src="{{STATIC_URL}}js/geoext/script/GeoExt.js"></script>
+      <script src="{{STATIC_URL}}js/cloudmade.js"></script>
+      <script src="{{STATIC_URL}}js/viewer.js"></script>
+   </head> 
+   <body> 
+      <div id="mainpanel"></div> 
+   </body> 
+</html> 
