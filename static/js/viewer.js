@@ -1,62 +1,94 @@
-var store;
-
-Ext.require([
-    'Ext.grid.*',
-    'Ext.data.*',
-    'Ext.util.*',
-    'Ext.state.*'
-]);
-
-// add new data: store.add({company: "hello", lastChange: "10/4 12:00am"})
+var mapPanel, store, gridPanel, mainPanel;
 
 Ext.onReady(function() {
+    // create map instance
+    var map = new OpenLayers.Map();
+    var bluemarble = new OpenLayers.Layer.WMS(
+       "Global Imagery",
+       "http://maps.opengeo.org/geowebcache/service/wms",
+       {layers: "bluemarble"}
+    );
+    var cloudmade = new OpenLayers.Layer.CloudMade("CloudMade", {
+        key: '8b8b9ae9d2b140d2bf5c19a6f086f2de',
+        styleId: 36256,
+    });
 
-    // setup the state provider, all state information will be saved to a cookie
-    Ext.state.Manager.setProvider(Ext.create('Ext.state.CookieProvider'));
+    // create vector layer
+    var vecLayer = new OpenLayers.Layer.Vector("vector");
+    map.addLayers([bluemarble, vecLayer]);
 
-    var myData = [
-        // ['CASLU1103439', 'SLO_CO', 'FIRE, WILDLAND', '2011-04-26 12:53:21'],
-    ];
+    // create map panel
+    mapPanel = new GeoExt.MapPanel({
+        region: "center",
+        map: map,
+        center: new OpenLayers.LonLat(-120.651, 35.347),
+        zoom: 10,
+    });
 
-    store = Ext.create('Ext.data.ArrayStore', {
+    // create feature store, binding it to the vector layer
+    store = new GeoExt.data.FeatureStore({
+        layer: vecLayer,
         fields: [
-            {name: 'id'},
-            {name: 'jrsdtn'},
-            {name: 'category'},
-            {name: 'date', type: 'date', dateFormat: 'Y-m-d h:i:s'}
+            {
+               name: 'category', 
+               type: 'string',
+            }, {
+               name: 'name', 
+               type: 'string',
+            }, {
+               name: 'time', 
+               type: 'date', 
+               dateFormat: 'Y-m-d H:i:s'
+            },
         ],
-        data: myData
+        proxy: new GeoExt.data.ProtocolProxy({
+            protocol: new OpenLayers.Protocol.HTTP({
+                url: "/json",
+                format: new OpenLayers.Format.GeoJSON()
+            })
+        }),
+        autoLoad: true
     });
 
-    var grid = Ext.create('Ext.grid.Panel', {
+    // create grid panel configured with feature store
+    gridPanel = new Ext.grid.GridPanel({
         store: store,
-        stateful: true,
-        stateId: 'stateGrid',
-        columns: [
-            { text: 'Incident ID',
-              width: 90,
-              sortable: false,
-              dataIndex: 'id' },
-            { text: 'Jurisdiction',
-              width: 75,
-              sortable: true,
-              dataIndex: 'jrsdtn' },
-            { text: 'Category',
-              width: 100,
-              sortable: true,
-              dataIndex: 'category' },
-            { text: 'Date',
-              width: 115,
-              sortable: true,
-              renderer: Ext.util.Format.dateRenderer('m/d/Y h:i:s'),
-              dataIndex: 'date' },
-        ],
-        height: 350,
-        width: 380,
-        title: 'Last 100 Incidents',
-        renderTo: 'grid-example',
-        viewConfig: {
-            stripeRows: true
-        }
+        columns: [{
+            header: "Time",
+            width: 95,
+            dataIndex: "time",
+            sortable: true,
+            renderer: Ext.util.Format.dateRenderer('m/d/y - H:i'),
+        }, {
+            header: "Category",
+            width: 83,
+            dataIndex: "category",
+            sortable: true,
+        }, {
+            header: "Name",
+            width: 100,
+            dataIndex: "name",
+            sortable: true,
+        }],
+        sm: new GeoExt.grid.FeatureSelectionModel(),
+        autoHeight: true,
+        stripeRows: true,
+        columnLines: true,
     });
+
+   var viewport = new Ext.Viewport({
+       renderTo: "mainpanel",
+       layout: "border",
+       items: [{
+          region:'center',
+          items: mapPanel,
+       }, {
+          title: 'Newest 100 Inicidents',
+          region: 'east',
+          width: 280,
+          items: gridPanel,
+       }]
+   });
+      
 });
+
