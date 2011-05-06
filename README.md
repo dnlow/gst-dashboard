@@ -17,7 +17,8 @@ Commands
 
 Commands implemented to help manage CAD data
 
-+ **python manage.py importLogs** - Import CAD logs in DjangoCAD/data/
++ **python manage.py strip** - Strip bad lines from CAD logs in data/raw/ and put them in data/stripped/
++ **python manage.py importall** - Import all CAD logs from data/stripped/
 
 CAD Data Format
 ---------------
