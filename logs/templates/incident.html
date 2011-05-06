@@ -1,51 +1,50 @@
 <html>
-    <head>
-        <title>SLO Incident: {{incident.name}}</title>
-        <script src="{{ STATIC_URL }}openlayers/OpenLayers.js"></script>
-        <script src="{{ STATIC_URL }}cloudmade.js"></script>
-        <script>
-            function init() {
-                var map = new OpenLayers.Map("map", {
-                    controls: [
-                        new OpenLayers.Control.Navigation(),
-                        new OpenLayers.Control.PanZoomBar(),
-                        new OpenLayers.Control.ScaleLine(),
-                        new OpenLayers.Control.Attribution(),
-                    ]
-                });
+   <head>
+      <title>SLO Incident: {{incident.name}}</title>
+      <script src="{{ STATIC_URL }}js/openlayers/OpenLayers.js"></script>
+      <script src="{{ STATIC_URL }}js/cloudmade.js"></script>
+      <script>
+         function init() {
+            var map = new OpenLayers.Map("map", {
+               controls: [
+               new OpenLayers.Control.Navigation(),
+               new OpenLayers.Control.PanZoomBar(),
+               new OpenLayers.Control.ScaleLine(),
+               new OpenLayers.Control.Attribution(),
+               ]
+            });
 
-                var cloudmade = new OpenLayers.Layer.CloudMade("CloudMade", {
-                    key: '8b8b9ae9d2b140d2bf5c19a6f086f2de',
-                    styleId: 36256
-                });
-                map.addLayer(cloudmade);
+            var cloudmade = new OpenLayers.Layer.CloudMade("CloudMade", {
+               key: '8b8b9ae9d2b140d2bf5c19a6f086f2de',
+               styleId: 36256
+            });
+            map.addLayer(cloudmade);
 
-                var epsg4326 = new OpenLayers.Projection("EPSG:4326");
-                var center = new OpenLayers.LonLat({{incident.latlng.get_x}}, {{incident.latlng.get_y}}).transform(epsg4326, map.getProjectionObject());
+            var epsg4326 = new OpenLayers.Projection("EPSG:4326");
+            var center = new OpenLayers.LonLat({{incident.latlng.get_x}}, {{incident.latlng.get_y}}).transform(epsg4326, map.getProjectionObject());
 
-                map.setCenter(center, 16);
-                var markers = new OpenLayers.Layer.Markers( "Markers" );
-                map.addLayer(markers);
+            map.setCenter(center, 16);
+            var markers = new OpenLayers.Layer.Markers("Markers");
+            map.addLayer(markers);
 
-                var size = new OpenLayers.Size(21,25);
-                var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
-                var icon = new OpenLayers.Icon("http://upload.wikimedia.org/wikipedia/commons/5/59/Crystal_Clear_app_ksokoban.png", size, offset);
-                markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat({{incident.latlng.get_x}}, {{incident.latlng.get_y}}).transform(epsg4326, map.getProjectionObject()),icon));
-
-            }
-        </script>
-    </head>
-    <body onload="init()">
-        <div id="map" style="width: 800px; height: 500px;"></div>
-        {{incident.name}}<br />
-        {{incident.details}} -- {{incident.category}} -- {{incident.type}}<br />
-        {{incident.address}}<br />
-        {{incident.jrsdtn}}<br />
-        {{incident.time}}<br />
-        {{incident.latlng}}<br />
-        <br /><br />
-        <div style="overflow: scroll; width: 800px; height: 200px; white-space: pre; font-size: 12px;">
-{{incident.log}}
-        </div>
-    </body>
+            var size = new OpenLayers.Size(21,25);
+            var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+            var icon = new OpenLayers.Icon("http://upload.wikimedia.org/wikipedia/commons/5/59/Crystal_Clear_app_ksokoban.png", size, offset);
+            markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat({{incident.latlng.get_x}}, {{incident.latlng.get_y}}).transform(epsg4326, map.getProjectionObject()),icon));
+         }
+      </script>
+   </head>
+   <body onload="init()">
+      <div id="map" style="width: 800px; height: 500px; border: 2px solid #000;"></div>
+      <b>ID:</b> {{incident.name}}<br />
+      <b>Category:</b> {{incident.details}} -- {{incident.category}} -- {{incident.type}}<br />
+      <b>Address:</b> {{incident.address}}<br />
+      <b>Jurisdiction:</b> {{incident.jrsdtn}}<br />
+      <b>Time:</b> {{incident.time}}<br />
+      <b>Location:</b> {{incident.latlng}}<br />
+      <br /><br />
+      <div style="overflow: scroll; width: 800px; height: 200px; white-space: pre; font-size: 12px;">
+         {{incident.log}}
+      </div>
+   </body>
 </html>
