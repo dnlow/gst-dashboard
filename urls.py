@@ -9,5 +9,6 @@ urlpatterns = patterns('',
     (r'^viewer/$', 'logs.views.viewer'),
     (r'^feed/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feed_dict}),
     (r'^json/$', 'logs.views.json_incident'),
+    (r'^json/(?P<number>\d+)/$', 'logs.views.json_incident'),
     (r'^admin/', include(admin.site.urls)),
 )
