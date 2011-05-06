@@ -63,9 +63,7 @@ Ext.onReady(function() {
    });
 
    var selectedStyle = new OpenLayers.Style({
-      pointRadius: 9, // sized according to type attribute
-      fillOpacity: 0.8,
-      strokeColor: "#000",
+      pointRadius: 10,
       strokeWidth: 3,
    });
 
@@ -84,7 +82,6 @@ Ext.onReady(function() {
        styleId: 36256,
    });
 
-   // create vector layer
    var vecLayer = new OpenLayers.Layer.Vector("vector", {
       styleMap: new OpenLayers.StyleMap({
          "default": style, 
@@ -93,15 +90,13 @@ Ext.onReady(function() {
    });
    map.addLayers([cloudmade, vecLayer]);
 
-   // create map panel
    var mapPanel = new GeoExt.MapPanel({
        region: "center",
        map: map,
-       center: new OpenLayers.LonLat(-120.651, 35.347).transform(epsg4326, mercator),
+       center: new OpenLayers.LonLat(-120.4, 35.307).transform(epsg4326, mercator),
        zoom: 10,
    });
 
-   // create feature store, binding it to the vector layer
    var store = new GeoExt.data.FeatureStore({
        layer: vecLayer,
        fields: [
@@ -147,16 +142,16 @@ Ext.onReady(function() {
            dataIndex: "details",
            sortable: true,
        }, {
+           header: "Name",
+           width: 100,
+           dataIndex: "name",
+           sortable: true,
+       }, {
            header: "Category",
            width: 80,
            dataIndex: "category",
            sortable: true,
            hidden: true,
-       }, {
-           header: "Name",
-           width: 100,
-           dataIndex: "name",
-           sortable: true,
        }],
        sm: new GeoExt.grid.FeatureSelectionModel(),
        stripeRows: true,
