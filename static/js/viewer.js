@@ -9,10 +9,12 @@ Ext.onReady(function() {
    var epsg4326 = new OpenLayers.Projection('EPSG:4326');
 
    var style = new OpenLayers.Style({
-      pointRadius: 5, // sized according to type attribute
+      pointRadius: 4, 
       fillColor: "#ffcc66",
       strokeColor: "#ff9933",
       strokeWidth: 2,
+      fillOpacity: 0.8,
+      strokeOpacity: 0.7,
    }, {
       rules: [
          new OpenLayers.Rule({
@@ -65,6 +67,8 @@ Ext.onReady(function() {
    var selectedStyle = new OpenLayers.Style({
       pointRadius: 10,
       strokeWidth: 3,
+      fillOpacity: 1,
+      strokeOpacity: 1,
    });
 
    // create map instance
@@ -82,13 +86,17 @@ Ext.onReady(function() {
        styleId: 36256,
    });
 
+   var gterrain = new OpenLayers.Layer.Google("Google Terrain", {
+       type: google.maps.MapTypeId.TERRAIN,
+   });
+
    var vecLayer = new OpenLayers.Layer.Vector("vector", {
       styleMap: new OpenLayers.StyleMap({
          "default": style, 
          "select": selectedStyle, 
       })
    });
-   map.addLayers([cloudmade, vecLayer]);
+   map.addLayers([gterrain, vecLayer]);
 
    var mapPanel = new GeoExt.MapPanel({
        region: "center",
@@ -117,14 +125,15 @@ Ext.onReady(function() {
        ],
        proxy: new GeoExt.data.ProtocolProxy({
            protocol: new OpenLayers.Protocol.HTTP({
-               url: "/json",
+               url: "/json/100",
                format: new OpenLayers.Format.GeoJSON({
                   internalProjection: mercator,
                   externalProjection: epsg4326,
-               })
+               }),
+               callback: function() { alert("data has been loaded"); },
            })
        }),
-       autoLoad: true
+       autoLoad: true,
    });
 
    // create grid panel configured with feature store
