@@ -28,6 +28,7 @@ def json_incident(request, number=None):
        properties['jrsdtn'] = incident.jrsdtn
        properties['category'] = incident.category
        properties['details'] = incident.details
+       properties['address'] = incident.address
        properties['time'] = str(incident.time)
        features.append(feature)
     return HttpResponse(json.dumps(root), mimetype='application/json')
