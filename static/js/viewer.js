@@ -1,20 +1,14 @@
-var centerPoint = function() {
-   alert('in the future this will center map on point');      
-}
+var map, store, gridWindow;
+var mercator = new OpenLayers.Projection('EPSG:900913');
+var epsg4326 = new OpenLayers.Projection('EPSG:4326');
 
 Ext.onReady(function() {
-   var mapPanel, store, gridPanel, mainPanel;
+   var mapPanel, gridPanel, mainPanel;
 
-   var mercator = new OpenLayers.Projection('EPSG:900913');
-   var epsg4326 = new OpenLayers.Projection('EPSG:4326');
-
+   // styles
    var style = new OpenLayers.Style({
-      pointRadius: 4, 
-      fillColor: "#ffcc66",
-      strokeColor: "#ff9933",
-      strokeWidth: 2,
-      fillOpacity: 0.8,
-      strokeOpacity: 0.7,
+      pointRadius: 10, 
+      graphicYOffset: -10,
    }, {
       rules: [
          new OpenLayers.Rule({
@@ -24,8 +18,7 @@ Ext.onReady(function() {
                value: "Fire",
             }),
             symbolizer: {
-               fillColor: "#ff9073",
-               strokeColor: "#ff3500",
+               externalGraphic: "/static/img/new_iconFire.png",
             }
          }),
          new OpenLayers.Rule({
@@ -35,8 +28,7 @@ Ext.onReady(function() {
                value: "Medical",
             }),
             symbolizer: {
-               fillColor: "#7279d8",
-               strokeColor: "#1924b1",
+               externalGraphic: "/static/img/new_iconMedical.png",
             }
          }),
          new OpenLayers.Rule({
@@ -46,8 +38,7 @@ Ext.onReady(function() {
                value: "Hazard",
             }),
             symbolizer: {
-               fillColor: "#ffbc73",
-               strokeColor: "#ff8500",
+               externalGraphic: "/static/img/new_iconHazard.png",
             }
          }),
          new OpenLayers.Rule({
@@ -57,46 +48,62 @@ Ext.onReady(function() {
                value: "Public Assist",
             }),
             symbolizer: {
-               fillColor: "#c062d3",
-               strokeColor: "#6e227e",
+               externalGraphic: "/static/img/new_iconPublicAssist.png",
+            }
+         }),
+         new OpenLayers.Rule({
+            filter: new OpenLayers.Filter.Comparison({
+               type: OpenLayers.Filter.Comparison.EQUAL_TO,
+               property: "category",
+               value: "Law Enforcement",
+            }),
+            symbolizer: {
+               externalGraphic: "/static/img/new_iconLawEnforcement.png",
             }
          }),
       ]
    });
 
    var selectedStyle = new OpenLayers.Style({
-      pointRadius: 10,
-      strokeWidth: 3,
-      fillOpacity: 1,
-      strokeOpacity: 1,
+      //pointRadius: 14,
+      //graphicYOffset: -13,
    });
 
-   // create map instance
-   var map = new OpenLayers.Map({
+   map = new OpenLayers.Map({
       projection: mercator,
+      panMethod: null,
       controls: [
          new OpenLayers.Control.Navigation(),   
          new OpenLayers.Control.PanZoom(),   
          new OpenLayers.Control.ScaleLine(),   
+         new OpenLayers.Control.LayerSwitcher(),
       ]
    });
 
-   var cloudmade = new OpenLayers.Layer.CloudMade("CloudMade", {
-       key: '8b8b9ae9d2b140d2bf5c19a6f086f2de',
-       styleId: 36256,
-   });
-
-   var gterrain = new OpenLayers.Layer.Google("Google Terrain", {
+   // layers
+   var gterrain = new OpenLayers.Layer.Google("Terrain", {
        type: google.maps.MapTypeId.TERRAIN,
    });
-
-   var vecLayer = new OpenLayers.Layer.Vector("vector", {
+   var cloudmade = new OpenLayers.Layer.CloudMade("Street map", {
+       key: '8b8b9ae9d2b140d2bf5c19a6f086f2de',
+       styleId: 997,
+   });
+   var ghybrid = new OpenLayers.Layer.Google("Satellite", {
+       type: google.maps.MapTypeId.HYBRID,
+   });
+   var vecLayer = new OpenLayers.Layer.Vector("Incidents", {
       styleMap: new OpenLayers.StyleMap({
          "default": style, 
          "select": selectedStyle, 
-      })
+      }),
+      "displayInLayerSwitcher": false,
    });
-   map.addLayers([gterrain, vecLayer]);
+
+   /*
+   cloudmade.setVisibility(false);
+   ghybrid.setVisibility(false);
+   */
+   map.addLayers([gterrain, cloudmade, ghybrid, vecLayer]);
 
    var mapPanel = new GeoExt.MapPanel({
        region: "center",
@@ -105,7 +112,7 @@ Ext.onReady(function() {
        zoom: 10,
    });
 
-   var store = new GeoExt.data.FeatureStore({
+   store = new GeoExt.data.FeatureStore({
        layer: vecLayer,
        fields: [
            {
@@ -121,16 +128,21 @@ Ext.onReady(function() {
               name: 'time', 
               type: 'date', 
               dateFormat: 'Y-m-d H:i:s'
+           }, {
+              name: 'address', 
+              type: 'string', 
+           }, {
+              name: 'jrsdtn', 
+              type: 'string', 
            },
        ],
        proxy: new GeoExt.data.ProtocolProxy({
            protocol: new OpenLayers.Protocol.HTTP({
-               url: "/json/100",
+               url: "/json/100/",
                format: new OpenLayers.Format.GeoJSON({
                   internalProjection: mercator,
                   externalProjection: epsg4326,
                }),
-               callback: function() { alert("data has been loaded"); },
            })
        }),
        autoLoad: true,
@@ -150,6 +162,7 @@ Ext.onReady(function() {
            width: 130,
            dataIndex: "details",
            sortable: true,
+           hidden: true,
        }, {
            header: "Name",
            width: 100,
@@ -157,8 +170,22 @@ Ext.onReady(function() {
            sortable: true,
        }, {
            header: "Category",
-           width: 80,
+           width: 90,
            dataIndex: "category",
+           sortable: true,
+           renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+               return '<img src="/static/img/icon' + value.replace(' ','') + '.png" alt="" /> ' + value
+           },
+       }, {
+           header: "Address",
+           width: 130,
+           dataIndex: "address",
+           sortable: true,
+           hidden: true,
+       }, {
+           header: "Jurisdiction",
+           width: 80,
+           dataIndex: "address",
            sortable: true,
            hidden: true,
        }],
@@ -166,11 +193,11 @@ Ext.onReady(function() {
        stripeRows: true,
        columnLines: true,
        listeners: {
-          'rowdblclick': centerPoint,
+          'rowdblclick': centerPopup,
        },
    });
 
-   var viewport = new Ext.Viewport({
+   viewport = new Ext.Viewport({
        renderTo: "mainpanel",
        layout: "border",
        items: [{
@@ -182,11 +209,47 @@ Ext.onReady(function() {
    var gridWindow = new Ext.Window({
       title: "Latest 100 Incidents",
       height: viewport.getHeight()-30, 
-      width: 343,
+      width: 323,
       closable: false,
       collapsible: true,
       layout: "fit",
       items: gridPanel,
    }).show();
-   gridWindow.setPosition(viewport.getWidth()-358,15);
+   gridWindow.setPosition(viewport.getWidth()-338,15);
 });
+
+/* centerPopup()
+   centers the map and adds a popup */
+function centerPopup(grid, index, e) {
+    var data = store.getAt(index).data;
+    var latlng = new OpenLayers.LonLat(data.feature.geometry.x, data.feature.geometry.y);
+    var html = '';
+    var popup;
+
+    centerMap(latlng);
+    //latlng.transform(mercator, epsg4326);
+
+    if (data.name)
+        html += 'Name: ' + data.name + '<br />';
+    if (data.jrsdtn)
+        html += 'Date/Time: ' + data.time + '<br />';
+    if (data.address)
+        html += 'Address: ' + data.address + '<br />';
+    if (data.jrsdtn)
+        html += 'Jurisdiction: ' + data.jrsdtn + '<br />';
+    if (data.details)
+        html += 'Details: ' + data.details + '<br />';
+    html += 'Lat/Lng: ' + latlng;
+
+    popup = new OpenLayers.Popup("popup", latlng, new OpenLayers.Size(300,100), html, true);
+    popup.autoSize = true;
+    popup.displayClass = "popup";
+    map.addPopup(popup);
+}
+
+/* centerMap()
+   centers map, taking into account grid */
+function centerMap(latlng) {
+    map.setCenter(latlng);
+    map.pan(viewport.getWidth()/4,viewport.getHeight()/8);
+}
