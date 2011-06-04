@@ -18,7 +18,7 @@ Ext.onReady(function() {
                value: "Fire",
             }),
             symbolizer: {
-               externalGraphic: "/static/img/new_iconFire.png",
+               externalGraphic: "/incident/static/img/new_iconFire.png",
             }
          }),
          new OpenLayers.Rule({
@@ -28,7 +28,7 @@ Ext.onReady(function() {
                value: "Medical",
             }),
             symbolizer: {
-               externalGraphic: "/static/img/new_iconMedical.png",
+               externalGraphic: "/incident/static/img/new_iconMedical.png",
             }
          }),
          new OpenLayers.Rule({
@@ -38,7 +38,7 @@ Ext.onReady(function() {
                value: "Hazard",
             }),
             symbolizer: {
-               externalGraphic: "/static/img/new_iconHazard.png",
+               externalGraphic: "/incident/static/img/new_iconHazard.png",
             }
          }),
          new OpenLayers.Rule({
@@ -48,7 +48,7 @@ Ext.onReady(function() {
                value: "Public Assist",
             }),
             symbolizer: {
-               externalGraphic: "/static/img/new_iconPublicAssist.png",
+               externalGraphic: "/incident/static/img/new_iconPublicAssist.png",
             }
          }),
          new OpenLayers.Rule({
@@ -58,7 +58,7 @@ Ext.onReady(function() {
                value: "Law Enforcement",
             }),
             symbolizer: {
-               externalGraphic: "/static/img/new_iconLawEnforcement.png",
+               externalGraphic: "/incident/static/img/new_iconLawEnforcement.png",
             }
          }),
       ]
@@ -138,7 +138,7 @@ Ext.onReady(function() {
        ],
        proxy: new GeoExt.data.ProtocolProxy({
            protocol: new OpenLayers.Protocol.HTTP({
-               url: "/json/100/",
+               url: "/incident/json/100/",
                format: new OpenLayers.Format.GeoJSON({
                   internalProjection: mercator,
                   externalProjection: epsg4326,
@@ -174,7 +174,7 @@ Ext.onReady(function() {
            dataIndex: "category",
            sortable: true,
            renderer: function(value, metaData, record, rowIndex, colIndex, store) {
-               return '<img src="/static/img/icon' + value.replace(' ','') + '.png" alt="" /> ' + value
+               return '<img src="/incident/static/img/icon' + value.replace(' ','') + '.png" alt="" /> ' + value
            },
        }, {
            header: "Address",
@@ -242,8 +242,6 @@ function centerPopup(grid, index, e) {
     html += 'Lat/Lng: ' + latlng;
 
     popup = new OpenLayers.Popup("popup", latlng, new OpenLayers.Size(300,100), html, true);
-    popup.autoSize = true;
-    popup.displayClass = "popup";
     map.addPopup(popup);
 }
 
