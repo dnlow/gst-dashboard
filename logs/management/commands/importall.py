@@ -19,12 +19,10 @@ class Command(BaseCommand):
 
         # Populate incident types
         types = csv.reader(open('etc/incidentTypes.csv', 'r'))
-        for line in types:
-            it[line[1]] = line[0]
+        it = dict((line[1], line[0]) for line in types)
 
         # Populate incidents from logs
-        logs = os.listdir('data/stripped/')
-        for log in logs:
+        for log in os.listdir('data/stripped/'):
             if fnmatch(log, '*_Log.txt'):
                 f = open('data/stripped/' + log, 'r')
                 for line in f.readlines():
