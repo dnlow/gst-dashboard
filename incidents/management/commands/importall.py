@@ -33,25 +33,25 @@ def get_incidents():
     tmp, incidents = {}, {}
     for line in lines():
         fields = line.split('|')
-        inc_id = fields[1]
+        id = fields[1]
         category, inc_type = types.get(fields[5], ('Unknown', 'Unknown'))
         # If incident is already created, just append log with line.
-        if inc_id in incidents:
-            incidents[inc_id].log += line
+        if id in incidents:
+            incidents[id].log += line
         # Only creates an incident if there is non-'other' data.
         elif category != "Other":
-            incidents[inc_id] = Incident(name=inc_id, type=fields[5], 
+            incidents[id] = Incident(name=id, type=fields[5], 
                 details=fields[6], category=category, address=fields[9],
                 time=datetime.strptime(fields[4],'%Y%m%d%H%M%S'), 
                 latlng=Point(float(fields[7]),float(fields[8])),
                 jrsdtn=fields[10])
-            if inc_id in tmp:
-                incidents[inc_id].log = tmp[inc_id] + line
-                del tmp[inc_id]
+            if id in tmp:
+                incidents[id].log = tmp[id] + line
+                del tmp[id]
             else:
-                incidents[inc_id].log = line
+                incidents[id].log = line
         else:
-            tmp[inc_id] = tmp.get(inc_id, '') + line
+            tmp[id] = tmp.get(id, '') + line
     for i in tmp:
         print(tmp[i])
         # add the rest in tmp?
