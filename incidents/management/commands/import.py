@@ -1,48 +1,37 @@
 from django.core.management.base import BaseCommand
 from django.contrib.gis.geos import Point
 from incidents.models import Incident
-from fnmatch import fnmatch
 from datetime import datetime
 from incidents.types import types
+from fnmatch import fnmatch
 import os
 
 
 class Command(BaseCommand):
     args = ''
-    help = 'Imports CAD logs into the PostGIS database'
+    help = ''
+
     def handle(self, *args, **options):
-        incidents = get_incidents()
-        save_incidents(incidents)
+        incdnts = get_incdnts()
+        save_incdnts(incdnts)
 
 
-def log_lines():
-    '''
-    Gets all the lines from the stripped logs
-    
-    Arguments:
-    None
-    
-    Yields lines of stripped logs 
-    '''
-    stripped = 'data/stripped/'
-    for log in os.listdir(stripped):
+def filter_incdnts():
+    for log in os.listdir('data/raw/'):
         if fnmatch(log, '*_Log.txt'):
-            with open(stripped + log, 'r') as f:
-                for line in f:
-                    yield(line)
+            with open('data/raw/' + log, 'r') as raw:
+                for line in raw:
+                    fields = line.split('|')
+                    if len(fields) > 9 and fields[7] and fields[8]:
+                        yield line
 
 
-def get_incidents():
+def get_incdnts():
     '''
-    Parses the stripped logs and returns a dictionary of Incidents
-    
-    Arguments:
-    None
-    
     Returns a dictionary of Incidents 
     '''
     tmp, incidents = {}, {}
-    for line in log_lines():
+    for line in filter_incdnts():
         fields = line.split('|')
         uid = fields[1]
         category, inc_type = types.get(fields[5], ('Unknown', 'Unknown'))
@@ -70,7 +59,7 @@ def get_incidents():
     return incidents
 
 
-def save_incidents(incidents):
+def save_incdnts(incidents):
     '''
     Save incidents to a spatial database
     
