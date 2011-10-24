@@ -67,7 +67,9 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 
 # A list of locations of additional static files
-STATICFILES_DIRS = ()
+STATICFILES_DIRS = (
+    'dashboard/static', 'viewer/static/'
+)
 
 # List of finder classes that know how to find static files in
 # various locations.
