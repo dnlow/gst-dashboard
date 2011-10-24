@@ -114,6 +114,7 @@ INSTALLED_APPS = (
     'django.contrib.gis',
     'viewer',
     'incidents',
+    'dashboard',
 )
 
 # A sample logging configuration. The only tangible logging
