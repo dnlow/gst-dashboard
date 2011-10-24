@@ -18,7 +18,7 @@ Ext.onReady(function() {
                value: "Fire",
             }),
             symbolizer: {
-               externalGraphic: "/incident/static/img/new_iconFire.png",
+               externalGraphic: staticURL + "/img/new_iconFire.png",
             }
          }),
          new OpenLayers.Rule({
@@ -28,7 +28,7 @@ Ext.onReady(function() {
                value: "Medical",
             }),
             symbolizer: {
-               externalGraphic: "/incident/static/img/new_iconMedical.png",
+               externalGraphic: staticURL + "/img/new_iconMedical.png",
             }
          }),
          new OpenLayers.Rule({
@@ -38,7 +38,7 @@ Ext.onReady(function() {
                value: "Hazard",
             }),
             symbolizer: {
-               externalGraphic: "/incident/static/img/new_iconHazard.png",
+               externalGraphic: staticURL + "/img/new_iconHazard.png",
             }
          }),
          new OpenLayers.Rule({
@@ -48,7 +48,7 @@ Ext.onReady(function() {
                value: "Public Assist",
             }),
             symbolizer: {
-               externalGraphic: "/incident/static/img/new_iconPublicAssist.png",
+               externalGraphic: staticURL + "/img/new_iconPublicAssist.png",
             }
          }),
          new OpenLayers.Rule({
@@ -58,7 +58,7 @@ Ext.onReady(function() {
                value: "Law Enforcement",
             }),
             symbolizer: {
-               externalGraphic: "/incident/static/img/new_iconLawEnforcement.png",
+               externalGraphic: staticURL + "/img/new_iconLawEnforcement.png",
             }
          }),
       ]
@@ -103,7 +103,8 @@ Ext.onReady(function() {
    cloudmade.setVisibility(false);
    ghybrid.setVisibility(false);
    */
-   map.addLayers([gterrain, cloudmade, ghybrid, vecLayer]);
+   //map.addLayers([gterrain, cloudmade, ghybrid, vecLayer]);
+   map.addLayers([gterrain, vecLayer]);
 
    var mapPanel = new GeoExt.MapPanel({
        region: "center",
@@ -138,7 +139,7 @@ Ext.onReady(function() {
        ],
        proxy: new GeoExt.data.ProtocolProxy({
            protocol: new OpenLayers.Protocol.HTTP({
-               url: "/incident/json/100/",
+               url: "/feed/geojson/100",
                format: new OpenLayers.Format.GeoJSON({
                   internalProjection: mercator,
                   externalProjection: epsg4326,
@@ -174,7 +175,7 @@ Ext.onReady(function() {
            dataIndex: "category",
            sortable: true,
            renderer: function(value, metaData, record, rowIndex, colIndex, store) {
-               return '<img src="/incident/static/img/icon' + value.replace(' ','') + '.png" alt="" /> ' + value
+               return '<img src="' + staticURL + '/img/icon' + value.replace(' ','') + '.png" alt="" /> ' + value
            },
        }, {
            header: "Address",
