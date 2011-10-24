@@ -1,0 +1,69 @@
+<html>
+   <head>
+      <title>Dashboard</title>
+      <script src="{{ STATIC_URL }}js/raphael/raphael-min.js" type="text/javascript" charset="utf-8"></script>
+      <script src="{{ STATIC_URL }}js/raphael/g.raphael-min.js" type="text/javascript" charset="utf-8"></script>
+      <script src="{{ STATIC_URL }}js/raphael/g.pie-min.js" type="text/javascript" charset="utf-8"></script>
+      <script src="{{ STATIC_URL }}js/raphael/g.line-min.js" type="text/javascript" charset="utf-8"></script>
+      <script src="{{ STATIC_URL }}js/leaflet/dist/leaflet.js" type="text/javascript" charset="utf-8"></script>
+      <script src="{{ STATIC_URL }}js/microajax.minified.js" type="text/javascript" charset="utf-8"></script>
+      <script src="{{ STATIC_URL }}js/dashboard.js" type="text/javascript" charset="utf-8"></script>
+      <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+      <link href="{{ STATIC_URL }}js/leaflet/dist/leaflet.css" rel="stylesheet" />
+      <style>
+         body {
+            background-color: #ddd;
+            font-family: 'Droid Sans', sans-serif;
+         } #header {
+            margin: 20px 0;
+            text-align: center;
+         } #title {
+            color: black; 
+            font-size: 30px;
+         } #wrapper {
+            width: 1000px;
+            margin: 0 auto;
+         } #map-panel {
+            border: gray solid 3px;
+            height: 600px;
+         } #incdnts {
+            overflow: scroll;
+            height: 600px;
+         } .incdnt {
+            border-bottom: 1px solid #777777;
+            font-size: 12px;
+            padding: 5px;
+            background-color: #ccc;
+         } .incdnt:hover {
+            background-color: #ddd;
+            border-bottom: 2px solid #777777;
+            border-top: 1px solid #777777;
+         } #map {
+            border-right: gray solid 1px;
+            float: left;
+            height: 600px;
+            width: 650px;
+         } #line, #pie {
+            background-color: white;
+            width: 900px;
+            height: 300px;
+         }
+      </style>
+   </head>
+   <body>
+      <div id="header">
+         <img src="{{ STATIC_URL}}img/slogo.png" alt="" />
+         <span id="title">CAL FIRE SLO Incident Dashboard</span>
+      </div>
+      <div id="wrapper">
+         <div id="map-panel">
+            <div id="map"></div>
+            <div id="incdnts"></div>
+         </div>
+         <!--
+         <div id="pie"></div>
+         <div id="line"></div>
+         -->
+      </div>
+   </body>
+</html>
