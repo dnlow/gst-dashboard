@@ -8,57 +8,57 @@ Ext.onReady(function() {
    // styles
    var style = new OpenLayers.Style({
       pointRadius: 10, 
-      graphicYOffset: -10,
+      graphicYOffset: -10
    }, {
       rules: [
          new OpenLayers.Rule({
             filter: new OpenLayers.Filter.Comparison({
                type: OpenLayers.Filter.Comparison.EQUAL_TO,
                property: "category",
-               value: "Fire",
+               value: "Fire"
             }),
             symbolizer: {
-               externalGraphic: staticURL + "/img/new_iconFire.png",
+               externalGraphic: staticURL + "/img/new_iconFire.png"
             }
          }),
          new OpenLayers.Rule({
             filter: new OpenLayers.Filter.Comparison({
                type: OpenLayers.Filter.Comparison.EQUAL_TO,
                property: "category",
-               value: "Medical",
+               value: "Medical"
             }),
             symbolizer: {
-               externalGraphic: staticURL + "/img/new_iconMedical.png",
+               externalGraphic: staticURL + "/img/new_iconMedical.png"
             }
          }),
          new OpenLayers.Rule({
             filter: new OpenLayers.Filter.Comparison({
                type: OpenLayers.Filter.Comparison.EQUAL_TO,
                property: "category",
-               value: "Hazard",
+               value: "Hazard"
             }),
             symbolizer: {
-               externalGraphic: staticURL + "/img/new_iconHazard.png",
+               externalGraphic: staticURL + "/img/new_iconHazard.png"
             }
          }),
          new OpenLayers.Rule({
             filter: new OpenLayers.Filter.Comparison({
                type: OpenLayers.Filter.Comparison.EQUAL_TO,
                property: "category",
-               value: "Public Assist",
+               value: "Public Assist"
             }),
             symbolizer: {
-               externalGraphic: staticURL + "/img/new_iconPublicAssist.png",
+               externalGraphic: staticURL + "/img/new_iconPublicAssist.png"
             }
          }),
          new OpenLayers.Rule({
             filter: new OpenLayers.Filter.Comparison({
                type: OpenLayers.Filter.Comparison.EQUAL_TO,
                property: "category",
-               value: "Law Enforcement",
+               value: "Law Enforcement"
             }),
             symbolizer: {
-               externalGraphic: staticURL + "/img/new_iconLawEnforcement.png",
+               externalGraphic: staticURL + "/img/new_iconLawEnforcement.png"
             }
          }),
       ]
@@ -82,21 +82,21 @@ Ext.onReady(function() {
 
    // layers
    var gterrain = new OpenLayers.Layer.Google("Terrain", {
-       type: google.maps.MapTypeId.TERRAIN,
+       type: google.maps.MapTypeId.TERRAIN
    });
    var cloudmade = new OpenLayers.Layer.CloudMade("Street map", {
        key: '8b8b9ae9d2b140d2bf5c19a6f086f2de',
-       styleId: 997,
+       styleId: 997
    });
    var ghybrid = new OpenLayers.Layer.Google("Satellite", {
-       type: google.maps.MapTypeId.HYBRID,
+       type: google.maps.MapTypeId.HYBRID
    });
    var vecLayer = new OpenLayers.Layer.Vector("Incidents", {
       styleMap: new OpenLayers.StyleMap({
          "default": style, 
-         "select": selectedStyle, 
+         "select": selectedStyle 
       }),
-      "displayInLayerSwitcher": false,
+      "displayInLayerSwitcher": false
    });
 
    /*
@@ -110,7 +110,7 @@ Ext.onReady(function() {
        region: "center",
        map: map,
        center: new OpenLayers.LonLat(-120.4, 35.307).transform(epsg4326, mercator),
-       zoom: 10,
+       zoom: 10
    });
 
    store = new GeoExt.data.FeatureStore({
@@ -118,23 +118,23 @@ Ext.onReady(function() {
        fields: [
            {
               name: 'category', 
-              type: 'string',
+              type: 'string'
            }, {
               name: 'name', 
-              type: 'string',
+              type: 'string'
            }, {
               name: 'details', 
-              type: 'string',
+              type: 'string'
            }, {
               name: 'time', 
               type: 'date', 
               dateFormat: 'Y-m-d H:i:s'
            }, {
               name: 'address', 
-              type: 'string', 
+              type: 'string' 
            }, {
               name: 'jrsdtn', 
-              type: 'string', 
+              type: 'string' 
            },
        ],
        proxy: new GeoExt.data.ProtocolProxy({
@@ -142,11 +142,11 @@ Ext.onReady(function() {
                url: "/feed/geojson/100",
                format: new OpenLayers.Format.GeoJSON({
                   internalProjection: mercator,
-                  externalProjection: epsg4326,
-               }),
+                  externalProjection: epsg4326
+               })
            })
        }),
-       autoLoad: true,
+       autoLoad: true
    });
 
    // create grid panel configured with feature store
@@ -157,18 +157,18 @@ Ext.onReady(function() {
            width: 80,
            dataIndex: "time",
            sortable: true,
-           renderer: Ext.util.Format.dateRenderer('m/d - H:i'),
+           renderer: Ext.util.Format.dateRenderer('m/d - H:i')
        }, {
            header: "Type",
            width: 130,
            dataIndex: "details",
            sortable: true,
-           hidden: true,
+           hidden: true
        }, {
            header: "Name",
            width: 100,
            dataIndex: "name",
-           sortable: true,
+           sortable: true
        }, {
            header: "Category",
            width: 90,
@@ -176,26 +176,26 @@ Ext.onReady(function() {
            sortable: true,
            renderer: function(value, metaData, record, rowIndex, colIndex, store) {
                return '<img src="' + staticURL + '/img/icon' + value.replace(' ','') + '.png" alt="" /> ' + value
-           },
+           }
        }, {
            header: "Address",
            width: 130,
            dataIndex: "address",
            sortable: true,
-           hidden: true,
+           hidden: true
        }, {
            header: "Jurisdiction",
            width: 80,
            dataIndex: "address",
            sortable: true,
-           hidden: true,
+           hidden: true
        }],
        sm: new GeoExt.grid.FeatureSelectionModel(),
        stripeRows: true,
        columnLines: true,
        listeners: {
-          'rowdblclick': centerPopup,
-       },
+          'rowdblclick': centerPopup
+       }
    });
 
    viewport = new Ext.Viewport({
@@ -203,7 +203,7 @@ Ext.onReady(function() {
        layout: "border",
        items: [{
           region:'center',
-          items: mapPanel,
+          items: mapPanel
        }]
    });
 
@@ -214,7 +214,7 @@ Ext.onReady(function() {
       closable: false,
       collapsible: true,
       layout: "fit",
-      items: gridPanel,
+      items: gridPanel
    }).show();
    gridWindow.setPosition(viewport.getWidth()-338,15);
 });
