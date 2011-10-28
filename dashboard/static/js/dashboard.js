@@ -1,4 +1,4 @@
-function leafletMap() {
+window.onload = (function () {
     "use strict";
 
     var incdnts = document.getElementById('incdnts');
@@ -13,7 +13,6 @@ function leafletMap() {
             incdnt.className = 'incdnt';
             incdnt.innerHTML = e.properties.time + '<br />' + e.properties.details + '<br />' + e.properties.address;
             incdnts.appendChild(incdnt);
-            console.log(e);
         });
         geojson.addGeoJSON(JSON.parse(res));
         map.addLayer(geojson);
@@ -21,7 +20,7 @@ function leafletMap() {
     var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/8b8b9ae9d2b140d2bf5c19a6f086f2de/997/256/{z}/{x}/{y}.png', 
     cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18});
     map.addLayer(cloudmade);
-}
+});
 
 /*function raphaelCharts() {
   "use strict";
@@ -47,9 +46,5 @@ function leafletMap() {
   }
 
   rl.g.linechart(0, 0, 1000, 300, x, [fire, med, haz, pa], {smooth: true});
-  }*/
-window.onload = function () {
-    "use strict";
-    //raphaelCharts();
-    leafletMap();
-}
+  }
+*/
