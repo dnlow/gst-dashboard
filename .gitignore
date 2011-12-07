@@ -2,4 +2,5 @@
 *.swp
 .pydevproject
 .project
-settings.py
+/server/settings.py
+/static
