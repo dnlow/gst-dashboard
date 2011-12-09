@@ -8,13 +8,10 @@ $(document).ready(function () {
 
         incidentListItem = function (evt) {
             // Loads a single incident to the list
-            var ahref = document.createElement("a"),
-                div = document.createElement("div");
-            ahref.setAttribute("href", "#");
+            var div = document.createElement("div");
             div.className = 'incdnt';
             div.innerHTML = evt.properties.time + '<br />' +
                 evt.properties.details + '<br />' + evt.properties.address;
-            ahref.appendChild(div);
             if (evt.properties.category === "Medical") {
                 $(div).css("border-left", "solid #1924b1 3px");
             } else if (evt.properties.category === "Fire") {
@@ -28,11 +25,11 @@ $(document).ready(function () {
             } else {
                 $(div).css("border-left", "solid #999999 3px");
             }
-            $(ahref).click(function () {
+            $(div).click(function () {
                 map.panTo(evt.layer.getLatLng());
                 evt.layer.openPopup();
             });
-            return ahref;
+            return div;
         },
 
         incidentMap = function (evt) {
