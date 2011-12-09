@@ -9,22 +9,21 @@ $(document).ready(function () {
         incidentListItem = function (evt) {
             // Loads a single incident to the list
             var div = document.createElement("div");
-            div.className = 'incdnt';
+            if (evt.properties.category === "Medical") {
+                div.className = 'incdnt med';
+            } else if (evt.properties.category === "Fire") {
+                div.className = 'incdnt fire';
+            } else if (evt.properties.category === "Hazard") {
+                div.className = 'incdnt hazard';
+            } else if (evt.properties.category === "Public Assist") {
+                div.className = 'incdnt pubassist';
+            } else if (evt.properties.category === "Law Enforcement") {
+                div.className = 'incdnt lawenf';
+            } else {
+                div.className = 'incdnt';
+            }
             div.innerHTML = evt.properties.time + '<br />' +
                 evt.properties.details + '<br />' + evt.properties.address;
-            if (evt.properties.category === "Medical") {
-                $(div).css("border-left", "solid #1924b1 3px");
-            } else if (evt.properties.category === "Fire") {
-                $(div).css("border-left", "solid #dc2500 3px");
-            } else if (evt.properties.category === "Hazard") {
-                $(div).css("border-left", "solid #f8980a 3px");
-            } else if (evt.properties.category === "Public Assist") {
-                $(div).css("border-left", "solid #a210ae 3px");
-            } else if (evt.properties.category === "Law Enforcement") {
-                $(div).css("border-left", "solid #16c0d4 3px");
-            } else {
-                $(div).css("border-left", "solid #999999 3px");
-            }
             $(div).click(function () {
                 map.panTo(evt.layer.getLatLng());
                 evt.layer.openPopup();
