@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     var map = new L.Map('map', {
         center: new L.LatLng(35.2819, -120.6617),
-        zoom: 13
+        zoom: 11
     }),
 
         incidentListItem = function (evt) {
@@ -24,10 +24,10 @@ $(document).ready(function () {
             }
             div.innerHTML = evt.properties.time + '<br />' +
                 evt.properties.details + '<br />' + evt.properties.address;
-            $(div).click(function () {
+            div.onclick = function () {
                 map.panTo(evt.layer.getLatLng());
                 evt.layer.openPopup();
-            });
+            };
             return div;
         },
 
@@ -54,7 +54,7 @@ $(document).ready(function () {
         baselayer = function () {
             // Adds a base layer to the map
             var url, cloudmade;
-            url = 'http://{s}.tile.cloudmade.com/8b8b9ae9d2b140d2bf5c19a6f086f2de/997/256/{z}/{x}/{y}.png';
+            url = 'http://{s}.tile.cloudmade.com/8b8b9ae9d2b140d2bf5c19a6f086f2de/1/256/{z}/{x}/{y}.png';
             cloudmade = new L.TileLayer(url, {maxZoom: 18});
             map.addLayer(cloudmade);
         },
@@ -64,13 +64,13 @@ $(document).ready(function () {
             var geojson,
                 incidentList;
             incidentList = document.getElementById("incdnts");
-            $.getJSON("/feed/geojson", function (res) {
+            microAjax("/feed/geojson", function (res) {
                 geojson = new L.GeoJSON();
                 geojson.on('featureparse', function (evt) {
                     incidentList.appendChild(incidentListItem(evt));
                     incidentMap(evt);
                 });
-                geojson.addGeoJSON(res);
+                geojson.addGeoJSON(JSON.parse(res));
                 map.addLayer(geojson);
             });
         };
