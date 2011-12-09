@@ -13,28 +13,47 @@
       <script src="{{ STATIC_URL }}js/leaflet/dist/leaflet.js"></script>
       <script src="{{ STATIC_URL }}js/microajax.minified.js"></script>
       <script src="{{ STATIC_URL }}js/dashboard.js"></script>
-      <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+      <script src="{{ STATIC_URL }}js/microajax.minified.js"></script>
       <link href="{{ STATIC_URL }}js/leaflet/dist/leaflet.css" rel="stylesheet" />
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
       <style>
          body {
-            background-color: #bbb;
-            font-family: 'Droid Sans', sans-serif;
+            background-color: #00203f;
+            margin: 0;
          } #header {
-            margin: 20px 0;
-            text-align: center;
+            height: 70px;
+            background: #003466;
+            background: -moz-linear-gradient(top, #003466 0%, #3d658b 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#003466), color-stop(100%,#3d658b));
+            background: -webkit-linear-gradient(top, #003466 0%,#3d658b 100%);
+            background: -o-linear-gradient(top, #003466 0%,#3d658b 100%);
+            background: -ms-linear-gradient(top, #003466 0%,#3d658b 100%);
+            background: linear-gradient(top, #003466 0%,#3d658b 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#003466', endColorstr='#3d658b',GradientType=0 );
+            -webkit-box-shadow: 0px 0px 10px 0px;
+            -moz-box-shadow: 0px 0px 10px 0px;
+            box-shadow: 0px 0px 10px 0px; 
+         } #logo {
+            vertical-align: middle;
+            margin: 10px 10px 0 0;
          } #title {
-            color: black; 
-            font-size: 30px;
-         } #wrapper {
-            width: 100%;
-            max-width: 1000px;
+            vertical-align: middle;
+            color: white;
+            font-size: 34px;
+            font-family: 'Open Sans', sans-serif;
+         } .wrapper {
+            width: 1000px;
             margin: 0 auto;
          } #map-panel {
-            border: gray solid 3px;
-            height: 600px;
+            margin: 50px 0;
+            border: #3d658b solid 5px;
+            height: 450px;
+            -webkit-box-shadow: 0px 0px 10px 0px;
+            -moz-box-shadow: 0px 0px 10px 0px;
+            box-shadow: 0px 0px 10px 0px; 
          } #incdnts {
             overflow: scroll;
-            height: 600px;
+            height: 450px;
             cursor: pointer;
          } #incdnts a {
             color: black;
@@ -43,7 +62,7 @@
             border-bottom: 1px solid #777777;
             font-size: 12px;
             padding: 5px;
-            background-color: #ddd;
+            background-color: white;
             border-left: solid #999999 3px;
          } .med {
             border-left: solid #1924b1 3px;
@@ -56,11 +75,11 @@
          } .lawenf {
              border-left: solid #16c0d4 3px;
          } .incdnt:hover {
-            background-color: #eee;
+            background-color: #dae3ec;
          } #map {
             border-right: gray solid 1px;
             float: left;
-            height: 600px;
+            height: 450px;
             width: 775px;
          } #options {
             background-color: gray;
@@ -86,14 +105,16 @@
    </head>
    <body>
       <div id="header">
-         <img src="{{ STATIC_URL}}img/slogo.png" alt="" />
-         <span id="title">CAL FIRE SLO Incident Dashboard</span>
+         <div class="wrapper">
+            <img id="logo" src="{{ STATIC_URL}}img/slogo.png" alt="" />
+            <span id="title">San Luis Obispo County Fire Incident Dashboard</span>
+         </div>
       </div>
-      <div id="wrapper">
+      <div class="wrapper">
          <div id="map-panel">
             <div id="map"></div>
             <div id="incdnts"></div>
-            <div id="options">Auto refresh is off</div>
+            <!--<div id="options">Auto refresh is off</div>-->
          </div>
          <!--
          <div id="pie"></div>
