@@ -37,7 +37,7 @@ $(document).ready(function () {
 
         incidentMap = function (evt) {
             // Loads a single incident to the map
-            var base = "http://cfslo.no-ip.org:8001/incident/static/img/";
+            var base = "http://cfslo.no-ip.org:8000/incident/static/img/";
             evt.layer.bindPopup(evt.properties.time + '<br />' +
                 evt.properties.details + '<br />' + evt.properties.address);
             if (evt.properties.category === "Medical") {
