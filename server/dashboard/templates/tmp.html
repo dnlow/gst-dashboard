@@ -4,10 +4,12 @@
       <!--[if IE]>
       <script src="{{ STATIC_URL }}js/json2.js"></script>
       <![endif]-->
+      <!--
       <script src="{{ STATIC_URL }}js/raphael/raphael-min.js"></script>
       <script src="{{ STATIC_URL }}js/raphael/g.raphael-min.js"></script>
       <script src="{{ STATIC_URL }}js/raphael/g.pie-min.js"></script>
-      <script src="{{ STATIC_URL }}js/raphael/g.line-min.js"></script>
+      <script src="{{ STATIC_URL }}js/raphael/g.line-min.js"></script>-->
+      <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script> <!-- we need to host this in teh future -->
       <script src="{{ STATIC_URL }}js/leaflet/dist/leaflet.js"></script>
       <script src="{{ STATIC_URL }}js/microajax.minified.js"></script>
       <script src="{{ STATIC_URL }}js/dashboard.js"></script>
@@ -15,7 +17,7 @@
       <link href="{{ STATIC_URL }}js/leaflet/dist/leaflet.css" rel="stylesheet" />
       <style>
          body {
-            background-color: #ddd;
+            background-color: #bbb;
             font-family: 'Droid Sans', sans-serif;
          } #header {
             margin: 20px 0;
@@ -24,7 +26,8 @@
             color: black; 
             font-size: 30px;
          } #wrapper {
-            width: 1000px;
+            width: 100%;
+            max-width: 1000px;
             margin: 0 auto;
          } #map-panel {
             border: gray solid 3px;
@@ -32,20 +35,25 @@
          } #incdnts {
             overflow: scroll;
             height: 600px;
+         } #incdnts a {
+            color: black;
+            text-decoration: none;
          } .incdnt {
             border-bottom: 1px solid #777777;
             font-size: 12px;
             padding: 5px;
-            background-color: #ccc;
-         } .incdnt:hover {
             background-color: #ddd;
-            border-bottom: 2px solid #777777;
-            border-top: 1px solid #777777;
+         } .incdnt:hover {
+            background-color: #eee;
          } #map {
             border-right: gray solid 1px;
             float: left;
             height: 600px;
-            width: 650px;
+            width: 775px;
+         } #options {
+            background-color: gray;
+            width: 300px;
+            margin: 0 auto;
          } #line, #pie {
             background-color: white;
             width: 900px;
@@ -73,6 +81,7 @@
          <div id="map-panel">
             <div id="map"></div>
             <div id="incdnts"></div>
+            <div id="options">Auto refresh is off</div>
          </div>
          <!--
          <div id="pie"></div>
