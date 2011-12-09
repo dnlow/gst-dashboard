@@ -33,27 +33,30 @@ def get_incdnts():
     tmp, incidents = {}, {}
     for line in filter_incdnts():
         fields = line.split('|')
-        uid = fields[1]
+        event_id = fields[1]
+        incident_id = fields[2]
         category, inc_type = types.get(fields[5], ('Unknown', 'Unknown'))
         # If incident is already created, just append log with line.
-        if uid in incidents:
-            incidents[uid].log += line
+        if event_id in incidents:
+            if not incidents[event_id].incident_id:
+                incidents[event_id].incident_id = incident_id
+            incidents[event_id].log += line
         # Only creates an incident if there is non-'other' data.
         elif category != "Other":    
-            incidents[uid] = Incident(name=uid, type=fields[5],
+            incidents[event_id] = Incident(event_id=event_id, type=fields[5],
                 details=fields[6], category=category, address=fields[9],
                 time=datetime.strptime(fields[4], '%Y%m%d%H%M%S'),
                 latlng=Point(float(fields[7]), float(fields[8])),
-                jrsdtn=fields[10])
+                jrsdtn=fields[10], incident_id=incident_id)
             # If there are previous, add them before the current line
-            if uid in tmp:
-                incidents[uid].log = tmp[uid] + line
-                del tmp[uid]
+            if event_id in tmp:
+                incidents[event_id].log = tmp[event_id] + line
+                del tmp[event_id]
             else:
-                incidents[uid].log = line
+                incidents[event_id].log = line
         # If 'other', just save log in temporary dictionary
         else:
-            tmp[uid] = tmp.get(uid, '') + line
+            tmp[event_id] = tmp.get(event_id, '') + line
     #for i in tmp:
         # add the rest in tmp?
     return incidents
@@ -66,10 +69,10 @@ def save_incdnts(incidents):
     Arguments:
     incidents -- a dictionary of Incidents to be saved
     '''
-    for uid in incidents:
-        curr = incidents[uid]
+    for event_id in incidents:
+        curr = incidents[event_id]
         try:
-            prev = Incident.objects.get(name=uid)
+            prev = Incident.objects.get(event_id=event_id)
             if prev != curr:
                 prev.delete()
                 curr.save()

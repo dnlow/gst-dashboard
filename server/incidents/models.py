@@ -1,7 +1,8 @@
 from django.contrib.gis.db import models
 
 class Incident(models.Model):
-    name = models.CharField(max_length=20)
+    incident_id = models.CharField(max_length=20)
+    event_id = models.CharField(max_length=20)
     type = models.CharField(max_length=6)
     details = models.CharField(max_length=50)
     category = models.CharField(max_length=15)
@@ -22,4 +23,5 @@ class Incident(models.Model):
                 self.latlng == other.latlng and
                 self.address == other.address and
                 self.jrsdtn == other.jrsdtn and
-                self.name == other.name)
+                self.incident_id == other.incident_id and
+                self.event_id == other.event_id)
