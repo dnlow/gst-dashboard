@@ -38,7 +38,7 @@ def get_incdnts():
         category, inc_type = types.get(fields[5], ('Unknown', 'Unknown'))
         # If incident is already created, just append log with line.
         if event_id in incidents:
-            if not incidents[event_id].incident_id:
+            if len(incident_id) > len(incidents[event_id].incident_id):
                 incidents[event_id].incident_id = incident_id
             incidents[event_id].log += line
         # Only creates an incident if there is non-'other' data.
