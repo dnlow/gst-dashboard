@@ -30,27 +30,26 @@
             background: -ms-linear-gradient(top, #003466 0%,#3d658b 100%);
             background: linear-gradient(top, #003466 0%,#3d658b 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#003466', endColorstr='#3d658b',GradientType=0 );
-            -webkit-box-shadow: 0px 0px 10px 0px;
-            -moz-box-shadow: 0px 0px 10px 0px;
-            box-shadow: 0px 0px 10px 0px; 
+            -webkit-box-shadow: 0px 0px 10px 0px #000000;
+            -moz-box-shadow: 0px 0px 10px 0px #000000;
+            box-shadow: 0px 0px 10px 0px #000000;
+            text-align: center;
          } #logo {
-            vertical-align: middle;
-            margin: 10px 10px 0 0;
          } #title {
-            vertical-align: middle;
             color: white;
             font-size: 34px;
             font-family: 'Open Sans', sans-serif;
-         } .wrapper {
+            text-shadow: 2px 2px 1px black;
+         } #wrapper {
             width: 1000px;
             margin: 0 auto;
          } #map-panel {
             margin: 50px 0;
             border: #3d658b solid 5px;
             height: 450px;
-            -webkit-box-shadow: 0px 0px 10px 0px;
-            -moz-box-shadow: 0px 0px 10px 0px;
-            box-shadow: 0px 0px 10px 0px; 
+            -webkit-box-shadow: 0px 0px 10px 0px #000000;
+            -moz-box-shadow: 0px 0px 10px 0px #000000;
+            box-shadow: 0px 0px 10px 0px #000000; 
          } #incdnts {
             overflow: scroll;
             height: 450px;
@@ -105,12 +104,10 @@
    </head>
    <body>
       <div id="header">
-         <div class="wrapper">
-            <img id="logo" src="{{ STATIC_URL}}img/slogo.png" alt="" />
-            <span id="title">San Luis Obispo County Fire Incident Dashboard</span>
-         </div>
+         <img id="logo" src="{{ STATIC_URL}}img/slogo.png" alt="" />
+         <span id="title">San Luis Obispo County Fire Incident Dashboard</span>
       </div>
-      <div class="wrapper">
+      <div id="wrapper">
          <div id="map-panel">
             <div id="map"></div>
             <div id="incdnts"></div>
