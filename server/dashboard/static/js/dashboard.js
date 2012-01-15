@@ -1,12 +1,11 @@
+// TODO: phase out jquery 'document ready'
+
 $(document).ready(function () {
     "use strict";
 
-    var map = new L.Map('map', {
-        center: new L.LatLng(35.2819, -120.6617),
-        zoom: 11
-    }),
+// Incident list functions ////////////////////////////////////////////////////
 
-        incidentListItem = function (evt) {
+    var incidentListItem = function (evt) {
             // Loads a single incident to the list
             var div = document.createElement("div");
             if (evt.properties.category === "Medical") {
@@ -22,8 +21,8 @@ $(document).ready(function () {
             } else {
                 div.className = 'incdnt';
             }
-            div.innerHTML = evt.properties.time + '<br />' +
-                evt.properties.details + '<br />' + evt.properties.address;
+            div.innerHTML = evt.properties.time + '<br />' + evt.properties.incident_id + '<br />' +
+                evt.properties.jrsdtn + '<br />' + evt.properties.details;
             div.onclick = function () {
                 map.panTo(evt.layer.getLatLng());
                 evt.layer.openPopup();
@@ -31,11 +30,15 @@ $(document).ready(function () {
             return div;
         },
 
-        incidentMap = function (evt) {
-            // Loads a single incident to the map
+// Incident map functions /////////////////////////////////////////////////////
+
+        initPopup = function (i) {
+            var fields = [i.properties.time, i.properties.details, i.properties.address, i.properties.jrsdtn];
+            i.layer.bindPopup(fields.join('<br>'));
+        },
+
+        setIcon = function (evt) {
             var base = "http://cfslo.no-ip.org:8000/incident/static/img/";
-            evt.layer.bindPopup(evt.properties.time + '<br />' +
-                evt.properties.details + '<br />' + evt.properties.address);
             if (evt.properties.category === "Medical") {
                 evt.layer.options.icon = new L.Icon(base + "m-marker.png");
             } else if (evt.properties.category === "Fire") {
@@ -51,6 +54,14 @@ $(document).ready(function () {
             }
         },
 
+        incidentMap = function (evt) {
+            // Loads a single incident to the map
+            initPopup(evt);
+            setIcon(evt);
+        },
+
+///////////////////////////////////////////////////////////////////////////////
+
         baselayer = function () {
             // Adds a base layer to the map
             var url, cloudmade;
@@ -62,8 +73,7 @@ $(document).ready(function () {
         incidents = function () {
             // Loads the GeoJSON data and adds to the map
             var geojson,
-                incidentList;
-            incidentList = document.getElementById("incdnts");
+                incidentList = document.getElementById("incdnts");
             microAjax("/feed/geojson", function (res) {
                 geojson = new L.GeoJSON();
                 geojson.on('featureparse', function (evt) {
@@ -73,11 +83,36 @@ $(document).ready(function () {
                 geojson.addGeoJSON(JSON.parse(res));
                 map.addLayer(geojson);
             });
-        };
+        },
 
-    // Load the layers
+        map = new L.Map('map', {
+            center: new L.LatLng(35.2819, -120.6617),
+            zoom: 11
+        });
+
+    // Load map layers
     baselayer();
     incidents();
+
+    $("#resize").toggle(function () {
+        $("#wrapper").animate({
+            "max-width": "100%"
+        }, 1000);
+        $("#map-panel").animate({
+            height: window.innerHeight-70,
+            marginTop: "0",
+        }, 1000);
+        $("#map-panel").css("box-shadow", "none");
+    }, function() {
+        $("#wrapper").animate({
+            maxWidth: "1000px"
+        }, 1000);
+        $("#map-panel").animate({
+            height: "450px",
+            marginTop: "50px",
+        }, 1000);
+        $("#map-panel").css("box-shadow", "0px 0px 10px 0px #000000");
+    });
 });
 
 /*function raphaelCharts() {
