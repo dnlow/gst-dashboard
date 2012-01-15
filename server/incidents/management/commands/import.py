@@ -43,17 +43,23 @@ def get_incdnts():
             incidents[event_id].log += line
         # Only creates an incident if there is non-'other' data.
         elif category != "Other":    
-            incidents[event_id] = Incident(event_id=event_id, type=fields[5],
-                details=fields[6], category=category, address=fields[9],
-                time=datetime.strptime(fields[4], '%Y%m%d%H%M%S'),
-                latlng=Point(float(fields[7]), float(fields[8])),
-                jrsdtn=fields[10], incident_id=incident_id)
-            # If there are previous, add them before the current line
-            if event_id in tmp:
-                incidents[event_id].log = tmp[event_id] + line
-                del tmp[event_id]
+            try:
+                incidents[event_id] = Incident(event_id=event_id, type=fields[5],
+                    details=fields[6], category=category, address=fields[9],
+                    time=datetime.strptime(fields[4], '%Y%m%d%H%M%S'),
+                    latlng=Point(float(fields[7]), float(fields[8])),
+                    jrsdtn=fields[10], incident_id=incident_id)
+            except:
+                # incorrectly formatted incidents
+                # print(line)
+                pass
             else:
-                incidents[event_id].log = line
+                # If there are previous, add them before the current line
+                if event_id in tmp:
+                    incidents[event_id].log = tmp[event_id] + line
+                    del tmp[event_id]
+                else:
+                    incidents[event_id].log = line
         # If 'other', just save log in temporary dictionary
         else:
             tmp[event_id] = tmp.get(event_id, '') + line
