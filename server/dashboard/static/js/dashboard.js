@@ -1,9 +1,7 @@
 // TODO: phase out jquery 'document ready'
 
-$(document).ready(function () {
-    "use strict";
-
-// Incident list functions ////////////////////////////////////////////////////
+var dashboard = (function () {
+    // Incident list functions ////////////////////////////////////////////////////
 
     var incidentListItem = function (evt) {
             // Loads a single incident to the list
@@ -30,7 +28,7 @@ $(document).ready(function () {
             return div;
         },
 
-// Incident map functions /////////////////////////////////////////////////////
+    // Incident map functions /////////////////////////////////////////////////////
 
         initPopup = function (i) {
             var fields = [i.properties.time, i.properties.details, i.properties.address, i.properties.jrsdtn];
@@ -60,14 +58,33 @@ $(document).ready(function () {
             setIcon(evt);
         },
 
-///////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
 
         baselayer = function () {
             // Adds a base layer to the map
-            var url, cloudmade;
+            var url, cloudmade, aerials;
             url = 'http://{s}.tile.cloudmade.com/8b8b9ae9d2b140d2bf5c19a6f086f2de/1/256/{z}/{x}/{y}.png';
             cloudmade = new L.TileLayer(url, {maxZoom: 18});
+
+            url = 'http://cfslo.no-ip.org:9000/service';
+            aerials = new L.TileLayer.WMS(url, {
+                layers: 'slocounty-12in',
+                format: 'image/png',
+                transparent: true
+            });
+
+            var baseMaps = {
+                "Road map": cloudmade
+            }
+
+            var overlayMaps = {
+                "Aerials": aerials
+            }
+
+            var layersControl = new L.Control.Layers(baseMaps, overlayMaps);
+
             map.addLayer(cloudmade);
+            map.addControl(layersControl);
         },
 
         incidents = function () {
@@ -88,31 +105,44 @@ $(document).ready(function () {
         map = new L.Map('map', {
             center: new L.LatLng(35.2819, -120.6617),
             zoom: 11
-        });
+        }),
+        
+        center;
 
-    // Load map layers
-    baselayer();
-    incidents();
+    return {
+        init: function () {
+            // Load map layers
+            baselayer();
+            incidents();
 
-    $("#resize").toggle(function () {
-        $("#wrapper").animate({
-            "max-width": "100%"
-        }, 1000);
-        $("#map-panel").animate({
-            height: window.innerHeight-70,
-            marginTop: "0",
-        }, 1000);
-        $("#map-panel").css("box-shadow", "none");
-    }, function() {
-        $("#wrapper").animate({
-            maxWidth: "1000px"
-        }, 1000);
-        $("#map-panel").animate({
-            height: "450px",
-            marginTop: "50px",
-        }, 1000);
-        $("#map-panel").css("box-shadow", "0px 0px 10px 0px #000000");
-    });
+            $("#fullscreen").toggle(function () {
+                center = map.getCenter();
+                $("#wrapper").css("max-width", "100%");
+                $("#main-panel").css("position", "absolute");
+                $("#main-panel").css("border-top-width", "0");
+                $("#main-panel").css("border-bottom-width", "0");
+                $("#main-panel").css("border-left-width", "0");
+                $("#main-panel").css("border-right-width", "0");
+                $("#main-panel").css("margin-top", "0");
+                $("#main-panel").css("height", "100%");
+                map.invalidateSize();
+                map.panTo(center);
+            }, function() {
+                center = map.getCenter();
+                $("#wrapper").css("max-width", "1000px");
+                $("#main-panel").css("position", "static");
+                $("#main-panel").css("border-top-width", "5px");
+                $("#main-panel").css("border-bottom-width", "5px");
+                $("#main-panel").css("border-left-width", "5px");
+                $("#main-panel").css("border-right-width", "5px");
+                $("#main-panel").css("margin-top", "50px");
+                $("#main-panel").css("height", "450px");
+                map.invalidateSize();
+                map.panTo(center);
+            });
+        }
+    };
+
 });
 
 /*function raphaelCharts() {
