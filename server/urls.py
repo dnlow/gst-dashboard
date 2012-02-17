@@ -9,7 +9,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     #(r'^incident/(?P<incident_id>\w+)/$', 'incidents.views.incidentInfo'),
-    (r'^viewer/$', 'viewer.views.viewer'),
+    #(r'^viewer/$', 'viewer.views.viewer'),
+    (r'^viewer/$', dashboard),
     (r'^dashboard/', dashboard),
     (r'^feed/geojson$', json_incident),
     (r'^feed/geojson/(?P<number>\d+)$', json_incident),
