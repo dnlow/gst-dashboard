@@ -10,7 +10,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     #(r'^incident/(?P<incident_id>\w+)/$', 'incidents.views.incidentInfo'),
-    #(r'^viewer/$', 'viewer.views.viewer'),
     (r'^$', dashboard),
     (r'^oldviewer/$', viewer),  # old viewer that is no longer used
     (r'^dashboard/', dashboard),
