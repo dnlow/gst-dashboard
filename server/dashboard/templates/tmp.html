@@ -6,13 +6,12 @@
       <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script> <!-- we need to host this in teh future -->
       <script type="text/javascript" src="{{ STATIC_URL }}js/leaflet/dist/leaflet.js"></script>
       <script type="text/javascript" src="{{ STATIC_URL }}js/microajax.minified.js"></script>
-      <script type="text/javascript" src="{{ STATIC_URL }}js/dashboard.js"></script>
       <link href="{{ STATIC_URL }}js/leaflet/dist/leaflet.css" rel="stylesheet" />
       <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet" type="text/css"/>
       <link href="{{ STATIC_URL }}css/dashboard.css" rel="stylesheet" />
       <script type="text/javascript">
          $(document).ready(function () {
-            dashboard().init();
+            dashboard.init();
          });
       </script>
       <script type="text/javascript">
@@ -35,14 +34,12 @@
       <div id="wrapper">
          <div id="main-panel">
             <div id="map"></div>
-            <div id="incdnts"><a href="#" id="fullscreen">Fullscreen</a></div>
-            <!--<div id="new_panel"></div>-->
-            <!--<div id="options">Auto refresh is off</div>-->
+            <div id="incdnts"></div>
          </div>
-         <!--
-         <div id="pie"></div>
-         <div id="line"></div>
-         -->
       </div>
+      <div id="footer">
+         <a href="#" id="fullscreen">Fullscreen mode</a> - <a href="/feed/georss">GeoRSS Feed</a>
+      </div>
+      <script type="text/javascript" src="{{ STATIC_URL }}js/dashboard.js"></script>
    </body>
 </html>
