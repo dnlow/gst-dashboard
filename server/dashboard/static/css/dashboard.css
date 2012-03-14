@@ -1,12 +1,14 @@
 body {
    font-family: 'Open Sans', sans-serif;
    background-color: #00203f;
-   margin: 0;
-} #header {
+   margin: 0; } 
+
+/* Header */
+
+#header {
+   text-align: center;
    height: 70px;
    line-height: 70px;
-   text-align: center;
-
    background: #003466;
    background: -moz-linear-gradient(top, #003466 0%, #3d658b 100%);
    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#003466), color-stop(100%,#3d658b));
@@ -15,31 +17,31 @@ body {
    background: -ms-linear-gradient(top, #003466 0%,#3d658b 100%);
    background: linear-gradient(top, #003466 0%,#3d658b 100%);
    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#003466', endColorstr='#3d658b',GradientType=0 );
-
    -webkit-box-shadow: 0px 0px 10px 0px #000000;
    -moz-box-shadow: 0px 0px 10px 0px #000000;
-   box-shadow: 0px 0px 10px 0px #000000;
-} #logo {
+   box-shadow: 0px 0px 10px 0px #000000; }
+
+#logo {
    display: inline-block;
-   vertical-align: middle;
-} #title {
+   vertical-align: middle; }
+
+#title {
    color: white;
    font-size: 34px;
    text-shadow: 2px 2px 1px black;
    font-weight: bold;
    display: inline-block;
    vertical-align: middle;
-   margin: 0 0 0 5px;
-} #wrapper {
+   margin: 0 0 0 5px; }
+
+/* Body */
+
+#wrapper {
    width: 100%;
    max-width: 1000px;
-   margin: 0 auto;
-}  #fullscreen {
-   width: 100%;
-   margin: 0 auto;
-   color: white;
-   text-decoration: none
-} #main-panel {
+   margin: 0 auto; }
+
+#main-panel {
    top: 0;
    bottom: 0;
    right: 0;
@@ -49,47 +51,77 @@ body {
    border: #3d658b solid 5px;
    -webkit-box-shadow: 0px 0px 10px 0px #000000;
    -moz-box-shadow: 0px 0px 10px 0px #000000;
-   box-shadow: 0px 0px 10px 0px #000000; 
-} #map {
+   box-shadow: 0px 0px 10px 0px #000000; }
+
+#map {
    border-right: gray solid 1px;
    float: left;
    height: 100%;
-   width: 83%;
-} #incdnts {
-   overflow: scroll;
+   width: 83%; }
+
+#incdnts {
+   overflow-y: scroll;
+   overflow-x: hidden;
    height: 100%;
-   cursor: pointer;
-} .incdnt a {
+   cursor: pointer; }
+
+.incdnt a {
    color: black;
-   text-decoration: none;
-} .incdnt {
+   text-decoration: none; }
+
+.incdnt {
    border-bottom: 1px solid #777777;
    font-size: 11px;
    padding: 5px;
    background-color: white;
-   border-left: solid #999999 3px;
-} .med {
-   border-left: solid #1924b1 3px;
-} .fire {
-    border-left: solid #dc2500 3px;
-} .hazard {
-    border-left: solid #f8980a 3px;
-} .pubassist {
-    border-left: solid #a210ae 3px;
-} .lawenf {
-    border-left: solid #16c0d4 3px;
-} .incdnt:hover {
-   background-color: #dae3ec;
-} #options {
-   background-color: gray;
-   width: 300px;
-   margin: 0 auto;
-} #line, #pie {
-   background-color: white;
-   width: 900px;
-   height: 300px;
-} #new_panel {
-   background-color: white;
-   border-top: 3px solid #3D658B;
-   height: 150px;
-}
+   border-left: solid #999999 3px; }
+
+.med {
+   border-left: solid #1924b1 3px; }
+
+.fire {
+    border-left: solid #dc2500 3px; }
+
+.hazard {
+    border-left: solid #f8980a 3px; }
+
+.pubassist {
+    border-left: solid #a210ae 3px; }
+
+.lawenf {
+    border-left: solid #16c0d4 3px; }
+
+.incdnt:hover {
+   background-color: #dae3ec; }
+
+#footer a {
+   margin: 20px 0;
+   color: #ddd;
+   text-decoration: none; } 
+
+/* Footer */
+
+#footer {
+   text-align: center;
+   margin: 100px 0 0 0;
+   color: #ccc;
+   text-shadow: 2px 2px 2px black;
+   position: absolute;
+   bottom: 0;
+   width: 100%;
+   height: 70px;
+   background: #003466;
+   background: -moz-linear-gradient(top, #3d658b 0%, #003466 100%);
+   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3d658b), color-stop(100%,#003466));
+   background: -webkit-linear-gradient(top, #3d658b 0%, #003466 100%);
+   background: -o-linear-gradient(top, #3d658b 0%, #003466 100%);
+   background: -ms-linear-gradient(top, #3d658b 0%, #003466 100%);
+   background: linear-gradient(top, #3d658b 0%, #003466 100%);
+   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3d658b', endColorstr='#003466',GradientType=0 );
+   -webkit-box-shadow: 0px 0px 10px 0px #000000;
+   -moz-box-shadow: 0px 0px 10px 0px #000000;
+   box-shadow: 0px 0px 10px 0px #000000; } 
+
+#footer a:hover {
+   text-decoration: underline;
+   color: #ccc; }
