@@ -120,6 +120,7 @@ var dashboard = (function () {
             $("#main-panel").css("height", "100%");
             map.invalidateSize();
             map.panTo(center);
+            $("#fullscreen").html("Dashboard mode");
         }, function() {
             center = map.getCenter();
             $("#wrapper").css("max-width", "1000px");
@@ -132,6 +133,7 @@ var dashboard = (function () {
             $("#main-panel").css("height", "450px");
             map.invalidateSize();
             map.panTo(center);
+            $("#fullscreen").html("Fullscreen mode");
         });
     }
     
