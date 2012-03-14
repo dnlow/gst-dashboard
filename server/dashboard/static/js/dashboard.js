@@ -59,7 +59,7 @@ var dashboard = (function () {
         url = 'http://{s}.tile.cloudmade.com/8b8b9ae9d2b140d2bf5c19a6f086f2de/1/256/{z}/{x}/{y}.png';
         cloudmade = new L.TileLayer(url, {maxZoom: 18});
 
-        url = 'http://cfslo.no-ip.org:8002/service';
+        url = 'http://mapproxy.slocountyfire.org/service';
         aerials = new L.TileLayer.WMS(url, {
             layers: 'slocounty-12in',
             format: 'image/png',
