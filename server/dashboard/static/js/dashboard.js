@@ -1,23 +1,27 @@
 var dashboard = (function () {
 
+    var incidents = [];
+    var geojson = new L.GeoJSON();
+    var firstIncdnt;
+
     var incidentListItem = function (evt) {
         // Loads a single incident to the list
+        var props = evt.properties;
         var div = document.createElement("div");
-        if (evt.properties.category === "Medical") {
+        if (props.category === "Medical") {
             div.className = 'incdnt med';
-        } else if (evt.properties.category === "Fire") {
+        } else if (props.category === "Fire") {
             div.className = 'incdnt fire';
-        } else if (evt.properties.category === "Hazard") {
+        } else if (props.category === "Hazard") {
             div.className = 'incdnt hazard';
-        } else if (evt.properties.category === "Public Assist") {
+        } else if (props.category === "Public Assist") {
             div.className = 'incdnt pubassist';
-        } else if (evt.properties.category === "Law Enforcement") {
+        } else if (props.category === "Law Enforcement") {
             div.className = 'incdnt lawenf';
         } else {
             div.className = 'incdnt';
         }
-        div.innerHTML = evt.properties.time + '<br />' + evt.properties.incident_id + '<br />' +
-            evt.properties.jrsdtn + '<br />' + evt.properties.details;
+        div.innerHTML = [props.time, props.incident_id, props.jrsdtn, props.details].join('<br />');
         div.onclick = function () {
             map.panTo(evt.layer.getLatLng());
             evt.layer.openPopup();
@@ -53,11 +57,11 @@ var dashboard = (function () {
         setIcon(evt);
     };
 
-    var baselayer = function () {
+    var addBaselayer = function () {
         // Adds a base layer to the map
-        var url, cloudmade, aerials;
+        var url, baselayer, aerials;
         url = 'http://{s}.tile.stamen.com/terrain/{z}/{x}/{y}.png';
-        cloudmade = new L.TileLayer(url, {maxZoom: 18});
+        baselayer = new L.TileLayer(url, {maxZoom: 18});
 
         url = 'http://mapproxy.slocountyfire.org/service';
         aerials = new L.TileLayer.WMS(url, {
@@ -72,7 +76,7 @@ var dashboard = (function () {
         });
 
         var baseMaps = {
-            "Road map": cloudmade
+            "Road map": baselayer
         }
 
         var overlayMaps = {
@@ -82,23 +86,41 @@ var dashboard = (function () {
 
         var layersControl = new L.Control.Layers(baseMaps, overlayMaps);
 
-        map.addLayer(cloudmade);
+        map.addLayer(baselayer);
         map.addControl(layersControl);
     };
 
-    var incidents = function () {
+    var addIncidentsLayer = function () {
         // Loads the GeoJSON data and adds to the map
-        var geojson,
-            incidentList = document.getElementById("incdnts");
-        microAjax("/feed/geojson", function (res) {
-            geojson = new L.GeoJSON();
+        var incidentList = document.getElementById("incdnts");
+        microAjax("/feed/geojson", function (res) {   
             geojson.on('featureparse', function (evt) {
-                incidentList.appendChild(incidentListItem(evt));
+		incidentList.insertBefore(incidentListItem(evt), firstIncdnt);
                 incidentMap(evt);
+		incidents.push(evt.properties.event_id);
             });
+	    firstIncdnt = incidentList.firstChild;
             geojson.addGeoJSON(JSON.parse(res));
             map.addLayer(geojson);
         });
+    };
+
+    var updateIncidentsLayer = function () {
+        var incidentList = document.getElementById("incdnts");
+	microAjax("/feed/geojson", function (res) {
+	    var i, jsonRes = JSON.parse(res), newFeatures = [];
+	    for (i = 0; i < jsonRes.features.length; i++) {
+		if (incidents.indexOf(jsonRes.features[i].properties.event_id) < 0) {
+		    newFeatures.push(jsonRes.features[i]);
+		    incidents.push(jsonRes.features[i].properties.event_id);
+		}
+	    }
+	    if (newFeatures.length > 0) {
+		jsonRes.features = newFeatures;
+		firstIncdnt = incidentList.firstChild;
+		geojson.addGeoJSON(jsonRes);
+	    }
+	});
     };
 
     var map = new L.Map('map', {
@@ -142,11 +164,13 @@ var dashboard = (function () {
     return {
         init: function () {
             // Load map layers
-            baselayer();
-            incidents();
+            addBaselayer();
+            addIncidentsLayer();
 
             // Init fullscreen
             fullscreen();
+
+	    window.setInterval(updateIncidentsLayer, 120000);
         }
     };
 
