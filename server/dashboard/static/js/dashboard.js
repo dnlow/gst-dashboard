@@ -133,16 +133,14 @@ var dashboard = (function () {
         $("#fullscreen").toggle(function () {
             center = map.getCenter();
             $("#wrapper").css("max-width", "100%");
-            $("#main-panel").removeClass('main-panel');
-            $("#main-panel").addClass('main-panel-full');
+            $("#main-panel").attr('id', 'main-panel-full');
             map.invalidateSize();
             map.panTo(center);
             $("#fullscreen").html("Dashboard mode");
         }, function() {
             center = map.getCenter();
             $("#wrapper").css("max-width", "1000px");
-            $("#main-panel").removeClass('main-panel-full');
-            $("#main-panel").addClass('main-panel');
+            $("#main-panel-full").attr('id', 'main-panel');
             map.invalidateSize();
             map.panTo(center);
             $("#fullscreen").html("Fullscreen mode");
