@@ -41,17 +41,20 @@ body {
    max-width: 1000px;
    margin: 0 auto; }
 
-#main-panel {
-   top: 0;
-   bottom: 0;
-   right: 0;
-   left: 0;
+.main-panel {
    height: 450px;
    margin: 50px 0 0 0;
    border: #3d658b solid 5px;
    -webkit-box-shadow: 0px 0px 10px 0px #000000;
    -moz-box-shadow: 0px 0px 10px 0px #000000;
    box-shadow: 0px 0px 10px 0px #000000; }
+
+.main-panel-full {
+   position: absolute;
+   top: 0;
+   bottom: 70px;
+   right: 0;
+   left: 0; }
 
 #map {
    border-right: gray solid 1px;

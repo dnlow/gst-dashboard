@@ -35,7 +35,7 @@ var dashboard = (function () {
     };
 
     var setIcon = function (evt) {
-        var base = "http://incidents.slocountyfire.org/static/img/";
+        var base = "/static/img/";
         if (evt.properties.category === "Medical") {
             evt.layer.options.icon = new L.Icon(base + "m-marker.png");
         } else if (evt.properties.category === "Fire") {
@@ -107,20 +107,20 @@ var dashboard = (function () {
 
     var updateIncidentsLayer = function () {
         var incidentList = document.getElementById("incdnts");
-	microAjax("/feed/geojson", function (res) {
-	    var i, jsonRes = JSON.parse(res), newFeatures = [];
-	    for (i = 0; i < jsonRes.features.length; i++) {
-		if (incidents.indexOf(jsonRes.features[i].properties.event_id) < 0) {
-		    newFeatures.push(jsonRes.features[i]);
-		    incidents.push(jsonRes.features[i].properties.event_id);
-		}
-	    }
-	    if (newFeatures.length > 0) {
-		jsonRes.features = newFeatures;
-		firstIncdnt = incidentList.firstChild;
-		geojson.addGeoJSON(jsonRes);
-	    }
-	});
+        microAjax("/feed/geojson", function (res) {
+            var i, jsonRes = JSON.parse(res), newFeatures = [];
+            for (i = 0; i < jsonRes.features.length; i++) {
+                if (incidents.indexOf(jsonRes.features[i].properties.event_id) < 0) {
+                    newFeatures.push(jsonRes.features[i]);
+                    incidents.push(jsonRes.features[i].properties.event_id);
+                }
+            }
+            if (newFeatures.length > 0) {
+            jsonRes.features = newFeatures;
+            firstIncdnt = incidentList.firstChild;
+            geojson.addGeoJSON(jsonRes);
+            }
+        });
     };
 
     var map = new L.Map('map', {
@@ -133,26 +133,16 @@ var dashboard = (function () {
         $("#fullscreen").toggle(function () {
             center = map.getCenter();
             $("#wrapper").css("max-width", "100%");
-            $("#main-panel").css("position", "absolute");
-            $("#main-panel").css("border-top-width", "0");
-            $("#main-panel").css("border-bottom-width", "0");
-            $("#main-panel").css("border-left-width", "0");
-            $("#main-panel").css("border-right-width", "0");
-            $("#main-panel").css("margin-top", "0");
-            $("#main-panel").css("height", "100%");
+            $("#main-panel").removeClass('main-panel');
+            $("#main-panel").addClass('main-panel-full');
             map.invalidateSize();
             map.panTo(center);
             $("#fullscreen").html("Dashboard mode");
         }, function() {
             center = map.getCenter();
             $("#wrapper").css("max-width", "1000px");
-            $("#main-panel").css("position", "static");
-            $("#main-panel").css("border-top-width", "5px");
-            $("#main-panel").css("border-bottom-width", "5px");
-            $("#main-panel").css("border-left-width", "5px");
-            $("#main-panel").css("border-right-width", "5px");
-            $("#main-panel").css("margin-top", "50px");
-            $("#main-panel").css("height", "450px");
+            $("#main-panel").removeClass('main-panel-full');
+            $("#main-panel").addClass('main-panel');
             map.invalidateSize();
             map.panTo(center);
             $("#fullscreen").html("Fullscreen mode");
@@ -170,7 +160,7 @@ var dashboard = (function () {
             // Init fullscreen
             fullscreen();
 
-	    window.setInterval(updateIncidentsLayer, 120000);
+            window.setInterval(updateIncidentsLayer, 120000);
         }
     };
 
