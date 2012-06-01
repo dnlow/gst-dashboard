@@ -6,13 +6,14 @@ from incidents.types import types
 from fnmatch import fnmatch
 import os
 
+LOG_DIR = 'data/raw/'
 
 class Command(BaseCommand):
     args = ''
     help = ''
 
     def handle(self, *args, **options):
-        incidents = get_incdnts()
+        incidents = parse_lines(get_lines())
         for event_id in incidents:
             incidents[event_id].save()
 
@@ -21,22 +22,22 @@ def is_log(log):
     return fnmatch(log, '*_Log.txt')
 
 
-def filter_incdnts():
-    logs = (log for log in os.listdir('data/raw') if is_log(log))
+def get_lines():
+    logs = (LOG_DIR + log for log in os.listdir(LOG_DIR) if is_log(log))
     for log in logs: 
-        with open('data/raw/' + log, 'r') as raw:
+        with open(log, 'r') as raw:
             for line in raw:
                 fields = line.split('|')
                 if len(fields) > 9 and fields[7] and fields[8]:
                     yield line
 
 
-def get_incdnts():
+def parse_lines(lines):
     '''
     Returns a dictionary of Incidents 
     '''
     tmp, incidents = {}, {}
-    for line in filter_incdnts():
+    for line in lines:
         fields = line.split('|')
         event_id = fields[1]
         incident_id = fields[2]
