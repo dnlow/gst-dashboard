@@ -4,3 +4,4 @@
 .project
 /server/settings.py
 /static
+/data
