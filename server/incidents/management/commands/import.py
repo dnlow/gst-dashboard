@@ -16,14 +16,18 @@ class Command(BaseCommand):
         save_incdnts(incdnts)
 
 
+def is_log(log):
+    return fnmatch(log, '*_Log.txt')
+
+
 def filter_incdnts():
-    for log in os.listdir('data/raw/'):
-        if fnmatch(log, '*_Log.txt'):
-            with open('data/raw/' + log, 'r') as raw:
-                for line in raw:
-                    fields = line.split('|')
-                    if len(fields) > 9 and fields[7] and fields[8]:
-                        yield line
+    logs = (log for log in os.listdir('data/raw') if is_log(log))
+    for log in logs: 
+        with open('data/raw/' + log, 'r') as raw:
+            for line in raw:
+                fields = line.split('|')
+                if len(fields) > 9 and fields[7] and fields[8]:
+                    yield line
 
 
 def get_incdnts():
