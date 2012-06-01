@@ -1,17 +1,18 @@
-from django.contrib.gis.db import models
+from django.contrib.gis.db import models as gis_models
+from django.db import models
 
-class Incident(models.Model):
-    incident_id = models.CharField(max_length=20)
-    event_id = models.CharField(max_length=20)
-    type = models.CharField(max_length=6)
-    details = models.CharField(max_length=50)
-    category = models.CharField(max_length=15)
-    time = models.DateTimeField()
-    latlng = models.PointField(srid=4269)
-    address = models.CharField(max_length=100)
-    jrsdtn = models.CharField(max_length=10)
-    log = models.TextField()
-    objects = models.GeoManager()
+class Incident(gis_models.Model):
+    incident_id = gis_models.CharField(max_length=20)
+    event_id = gis_models.CharField(max_length=20)
+    type = gis_models.CharField(max_length=6)
+    details = gis_models.CharField(max_length=50)
+    category = gis_models.CharField(max_length=15)
+    time = gis_models.DateTimeField()
+    latlng = gis_models.PointField(srid=4269)
+    address = gis_models.CharField(max_length=100)
+    jrsdtn = gis_models.CharField(max_length=10)
+    log = gis_models.TextField()
+    objects = gis_models.GeoManager()
 
     def __eq__(self, other):
         return (self.log == other.log and
@@ -25,3 +26,16 @@ class Incident(models.Model):
                 self.jrsdtn == other.jrsdtn and
                 self.incident_id == other.incident_id and
                 self.event_id == other.event_id)
+
+    def save(self, *args, **kwargs):
+        try:
+            prev = Incident.objects.get(event_id=self.event_id) 
+            if prev != self:
+                prev.delete()
+                super(Incident, self).save(*args, **kwargs)
+        except Incident.DoesNotExist:
+                super(Incident, self).save(*args, **kwargs)
+
+
+class Log(models.Model):
+    pass

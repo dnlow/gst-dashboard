@@ -12,8 +12,9 @@ class Command(BaseCommand):
     help = ''
 
     def handle(self, *args, **options):
-        incdnts = get_incdnts()
-        save_incdnts(incdnts)
+        incidents = get_incdnts()
+        for event_id in incidents:
+            incidents[event_id].save()
 
 
 def is_log(log):
@@ -70,21 +71,3 @@ def get_incdnts():
     #for i in tmp:
         # add the rest in tmp?
     return incidents
-
-
-def save_incdnts(incidents):
-    '''
-    Save incidents to a spatial database
-    
-    Arguments:
-    incidents -- a dictionary of Incidents to be saved
-    '''
-    for event_id in incidents:
-        curr = incidents[event_id]
-        try:
-            prev = Incident.objects.get(event_id=event_id)
-            if prev != curr:
-                prev.delete()
-                curr.save()
-        except Incident.DoesNotExist:
-            curr.save()
