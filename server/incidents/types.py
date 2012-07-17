@@ -1,5 +1,6 @@
 # callsign: (category, more info),
-types = {"DEL": ("Other", "Delay Response"),
+types = {
+    "DEL": ("Other", "Delay Response"),
     "FAA": ("Fire", "Aircraft"),
     "FAAL": ("Fire", "Aircraft - Large"),
     "FAAS": ("Fire", "Aircraft - Small"),
@@ -403,4 +404,5 @@ types = {"DEL": ("Other", "Delay Response"),
     "PAOS": ("Public Assist", "Salvage"),
     "PAOT": ("Public Assist", "Traffic Hazard"),
     "PAP": ("Public Assist", "Person"),
-    "PSR": ("Public Assist", "Search & Rescue")}
+    "PSR": ("Public Assist", "Search & Rescue")
+}
