@@ -17,7 +17,7 @@ def json_incident(request, number=None):
     root['type'] = "FeatureCollection"
     root['features'] = features
     for incident in incidents:
-        feature = {
+        features.append({
             'type': 'Feature',
             'geometry': json.loads(incident.latlng.geojson),
             'properties': {
@@ -29,6 +29,5 @@ def json_incident(request, number=None):
                 'address': incident.address,
                 'time': str(incident.time)
             }
-        }
-        features.append(feature)
+        })
     return HttpResponse(json.dumps(root), mimetype='application/json')
