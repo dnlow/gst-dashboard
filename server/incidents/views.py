@@ -17,17 +17,18 @@ def json_incident(request, number=None):
     root['type'] = "FeatureCollection"
     root['features'] = features
     for incident in incidents:
-        feature = {}
-        properties = {}
-        feature['type'] = "Feature"
-        feature['geometry'] = json.loads(incident.latlng.geojson)
-        feature['properties'] = properties
-        properties['event_id'] = incident.event_id
-        properties['incident_id'] = incident.incident_id
-        properties['jrsdtn'] = incident.jrsdtn
-        properties['category'] = incident.category
-        properties['details'] = incident.details
-        properties['address'] = incident.address
-        properties['time'] = str(incident.time)
+        feature = {
+            'type': 'Feature',
+            'geometry': json.loads(incident.latlng.geojson),
+            'properties': {
+                'event_id': incident.event_id,
+                'incident_id': incident.incident_id,
+                'jrsdtn': incident.jrsdtn,
+                'category': incident.category,
+                'details': incident.details,
+                'address': incident.address,
+                'time': str(incident.time)
+            }
+        }
         features.append(feature)
     return HttpResponse(json.dumps(root), mimetype='application/json')
