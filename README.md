@@ -4,11 +4,16 @@ A Django project dedicated to displaying CAD (computer aided dispatch) data onli
 
 ## Setup
 
-1. `git clone git@github.com:frewsxcv/cfslo-incident-viewer.git`
-2. Create a PostGIS database
-3. Update 'settings\_template.py' to update database information and rename to 'settings.py'
-4. Run `python manage.py impor` on the data in cfslo-incident-viewer/data/
-5. Start the Django server: `python manage.py runserver`
+1. Clone the repository: `git clone git@github.com:frewsxcv/cfslo-incident-viewer.git`
+2. Create a PostGIS database ([instructions from the PostGIS docs](http://postgis.refractions.net/documentation/manual-1.5/ch02.html#id2661925))
+3. Copy the file `settings\_template.py` in the `server` directory and name it `settings.py`
+4. Modify the database fields in `settings.py` to match the PostgreSQL + PostGIS database that was set up in Step 2
+4. Create the database tables: `python server/manage.py syncdb`
+5. Import the incident logs: `python server/manage.py import`
+
+## Running
+
+Start the Django server: `python server/manage.py runserver`
 
 ## Commands
 
