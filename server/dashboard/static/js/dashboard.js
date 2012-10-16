@@ -100,7 +100,7 @@ var dashboard = (function () {
 		incidents.push(evt.properties.event_id);
             });
 	    firstIncdnt = incidentList.firstChild;
-            geojson.addGeoJSON(JSON.parse(res));
+            geojson.addData(JSON.parse(res));
             map.addLayer(geojson);
         });
     };
@@ -118,7 +118,7 @@ var dashboard = (function () {
             if (newFeatures.length > 0) {
             jsonRes.features = newFeatures;
             firstIncdnt = incidentList.firstChild;
-            geojson.addGeoJSON(jsonRes);
+            geojson.addData(jsonRes);
             }
         });
     };

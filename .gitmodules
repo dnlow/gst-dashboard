@@ -1,3 +1,0 @@
-[submodule "server/dashboard/static/js/leaflet"]
-	path = server/dashboard/static/js/leaflet
-	url = https://github.com/CloudMade/Leaflet.git
