@@ -1,12 +1,16 @@
-from django.core.management.base import BaseCommand
-from django.contrib.gis.geos import Point
-from incidents.models import Incident
 from datetime import datetime
-from incidents.types import types
 from fnmatch import fnmatch
 import os
 
+from django.core.management.base import BaseCommand
+from django.contrib.gis.geos import Point
+
+from incidents.models import Incident
+from incidents.types import types
+
+
 LOG_DIR = 'data/raw/'
+
 
 class Command(BaseCommand):
     args = ''
@@ -24,7 +28,7 @@ def is_log(log):
 
 def get_lines():
     logs = (LOG_DIR + log for log in os.listdir(LOG_DIR) if is_log(log))
-    for log in logs: 
+    for log in logs:
         with open(log, 'r') as raw:
             for line in raw:
                 fields = line.split('|')
@@ -34,7 +38,7 @@ def get_lines():
 
 def parse_lines(lines):
     '''
-    Returns a dictionary of Incidents 
+    Returns a dictionary of Incidents
     '''
     tmp, incidents = {}, {}
     for line in lines:
@@ -48,10 +52,11 @@ def parse_lines(lines):
                 incidents[event_id].incident_id = incident_id
             incidents[event_id].log += line
         # Only creates an incident if there is non-'other' data.
-        elif category != "Other":    
+        elif category != "Other":
             try:
-                incidents[event_id] = Incident(event_id=event_id, type=fields[5],
-                    details=fields[6], category=category, address=fields[9],
+                incidents[event_id] = Incident(event_id=event_id,
+                    type=fields[5], details=fields[6], category=category,
+                    address=fields[9],
                     time=datetime.strptime(fields[4], '%Y%m%d%H%M%S'),
                     latlng=Point(float(fields[7]), float(fields[8])),
                     jrsdtn=fields[10], incident_id=incident_id)
