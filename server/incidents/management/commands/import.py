@@ -40,7 +40,7 @@ def get_valid_logs():
 
 
 def get_lines():
-    for log in get_valid_logs()
+    for log in get_valid_logs():
         with open(log, 'r') as raw:
             for line in raw:
                 fields = line.split('|')
