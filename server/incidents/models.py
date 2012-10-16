@@ -37,5 +37,6 @@ class Incident(gis_models.Model):
                 super(Incident, self).save(*args, **kwargs)
 
 
-class Log(models.Model):
-    pass
+class LogFile(models.Model):
+    name = models.CharField(max_length=20)
+    size = models.PositiveIntegerField()

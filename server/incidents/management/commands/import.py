@@ -1,9 +1,11 @@
 from django.core.management.base import BaseCommand
 from django.contrib.gis.geos import Point
 from incidents.models import Incident
+from incidents.models import LogFile
 from datetime import datetime
 from incidents.types import types
 from fnmatch import fnmatch
+import os.path
 import os
 
 LOG_DIR = 'data/raw/'
@@ -18,13 +20,26 @@ class Command(BaseCommand):
             incidents[event_id].save()
 
 
-def is_log(log):
-    return fnmatch(log, '*_Log.txt')
+def get_valid_logs():
+    all_logs = (l for l in os.listdir(LOG_DIR) if fnmatch(l, '*_Log.txt'))
+    for log_name in all_logs:
+        log_size = os.path.getsize(LOG_DIR + log_name)
+        try:
+            lf = LogFile.objects.get(name=log_name)
+        except LogFile.DoesNotExist:
+            lf = LogFile(name=log_name, size=log_size)
+            lf.save()
+            yield LOG_DIR + log_name
+        else:
+            if lf.size != log_size:
+                lf.size = log_size
+                lf.save()
+                yield LOG_DIR + log_name
 
 
 def get_lines():
-    logs = (LOG_DIR + log for log in os.listdir(LOG_DIR) if is_log(log))
-    for log in logs: 
+    logs = get_valid_logs()
+    for log in logs:
         with open(log, 'r') as raw:
             for line in raw:
                 fields = line.split('|')
