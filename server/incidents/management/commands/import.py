@@ -48,6 +48,30 @@ def get_lines():
                     yield line
 
 
+def get_jrsdtn(field):
+    names = {
+        "AG": "Arroyo Grande",
+        "ATAS": "Atascadero",
+        "CAMBRIA": "Cambria",
+        "CAY": "Cayucos",
+        "GB": "Grover Beach",
+        "LOS_OSOS": "Los Osos",
+        "MB": "Morro Bay",
+        "NIP": "Nipomo",
+        "OCE": "",
+        "OOJ": "",
+        "PB": "Pismo Beach",
+        "PR": "Paso Robles",
+        "SAN_MIG": "San Miguel",
+        "SANTA_MARG": "",
+        "SHAN": "Shandon",
+        "SLO": "SLO City",
+        "SLO_CO": "SLO County",
+        "TEMP": "Templeton"
+    }
+    return names.get(field, "")
+
+
 def parse_lines(lines):
     '''
     Returns a dictionary of Incidents
@@ -71,7 +95,7 @@ def parse_lines(lines):
                     address=fields[9],
                     time=datetime.strptime(fields[4], '%Y%m%d%H%M%S'),
                     latlng=Point(float(fields[7]), float(fields[8])),
-                    jrsdtn=fields[10], incident_id=incident_id)
+                    jrsdtn=get_jrsdtn(fields[10]), incident_id=incident_id)
             except:
                 # incorrectly formatted incidents
                 # print(line)

@@ -10,7 +10,7 @@ class Incident(gis_models.Model):
     time = gis_models.DateTimeField()
     latlng = gis_models.PointField(srid=4269)
     address = gis_models.CharField(max_length=100)
-    jrsdtn = gis_models.CharField(max_length=10)
+    jrsdtn = gis_models.CharField(max_length=20)
     log = gis_models.TextField()
     objects = gis_models.GeoManager()
 
