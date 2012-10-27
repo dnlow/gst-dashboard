@@ -9,7 +9,7 @@ from django.contrib.gis.geos import Point
 from incidents.models import Incident, LogFile
 from incidents.types import types
 
-LOG_DIR = 'data/raw/'
+LOG_DIR = 'data/'
 
 
 class Command(BaseCommand):
