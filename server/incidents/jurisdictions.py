@@ -1,0 +1,20 @@
+jrsdtns = {
+    "AG": "Arroyo Grande",
+    "ATAS": "Atascadero",
+    "CAMBRIA": "Cambria",
+    "CAY": "Cayucos",
+    "GB": "Grover Beach",
+    "LOS_OSOS": "Los Osos",
+    "MB": "Morro Bay",
+    "NIP": "Nipomo",
+    "OCE": "",
+    "OOJ": "",
+    "PB": "Pismo Beach",
+    "PR": "Paso Robles",
+    "SAN_MIG": "San Miguel",
+    "SANTA_MARG": "",
+    "SHAN": "Shandon",
+    "SLO": "SLO City",
+    "SLO_CO": "SLO County",
+    "TEMP": "Templeton"
+}

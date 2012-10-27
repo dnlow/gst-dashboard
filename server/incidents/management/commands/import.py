@@ -8,6 +8,7 @@ from django.contrib.gis.geos import Point
 
 from incidents.models import Incident, LogFile
 from incidents.types import types
+from incidents.jurisdictions import jrsdtns
 
 LOG_DIR = 'data/'
 
@@ -48,28 +49,23 @@ def get_lines():
                     yield line
 
 
-def get_jrsdtn(field):
-    names = {
-        "AG": "Arroyo Grande",
-        "ATAS": "Atascadero",
-        "CAMBRIA": "Cambria",
-        "CAY": "Cayucos",
-        "GB": "Grover Beach",
-        "LOS_OSOS": "Los Osos",
-        "MB": "Morro Bay",
-        "NIP": "Nipomo",
-        "OCE": "",
-        "OOJ": "",
-        "PB": "Pismo Beach",
-        "PR": "Paso Robles",
-        "SAN_MIG": "San Miguel",
-        "SANTA_MARG": "",
-        "SHAN": "Shandon",
-        "SLO": "SLO City",
-        "SLO_CO": "SLO County",
-        "TEMP": "Templeton"
-    }
-    return names.get(field, "")
+def parse_fields(fields):
+    category, inc_type = types.get(fields[5], ('Unknown', 'Unknown'))
+    try:
+        parsed = {
+            "event_id": fields[1],
+            "incident_id": fields[2],
+            "type": fields[5],
+            "details": fields[6],
+            "address": fields[9],
+            "jrsdtn": jrsdtns.get(fields[10], ""),
+            "latlng": Point(float(fields[7]), float(fields[8])),
+            "category": category,
+            "time": datetime.strptime(fields[4], "%Y%m%d%H%M%S")
+        }
+    except:
+        raise Exception("Invalid fields")
+    return parsed
 
 
 def parse_lines(lines):
@@ -79,9 +75,14 @@ def parse_lines(lines):
     tmp, incidents = {}, {}
     for line in lines:
         fields = line.split('|')
-        event_id = fields[1]
-        incident_id = fields[2]
-        category, inc_type = types.get(fields[5], ('Unknown', 'Unknown'))
+        try:
+            data = parse_fields(fields)
+        except:
+            continue
+        event_id = data["event_id"]
+        incident_id = data["incident_id"]
+        category = data["category"]
+
         # If incident is already created, just append log with line.
         if event_id in incidents:
             if len(incident_id) > len(incidents[event_id].incident_id):
@@ -90,12 +91,7 @@ def parse_lines(lines):
         # Only creates an incident if there is non-'other' data.
         elif category != "Other":
             try:
-                incidents[event_id] = Incident(event_id=event_id,
-                    type=fields[5], details=fields[6], category=category,
-                    address=fields[9],
-                    time=datetime.strptime(fields[4], '%Y%m%d%H%M%S'),
-                    latlng=Point(float(fields[7]), float(fields[8])),
-                    jrsdtn=get_jrsdtn(fields[10]), incident_id=incident_id)
+                incidents[event_id] = Incident(**data)
             except:
                 # incorrectly formatted incidents
                 # print(line)

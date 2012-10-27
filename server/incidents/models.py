@@ -1,6 +1,7 @@
 from django.contrib.gis.db import models as gis_models
 from django.db import models
 
+
 class Incident(gis_models.Model):
     incident_id = gis_models.CharField(max_length=20)
     event_id = gis_models.CharField(max_length=20)
@@ -29,7 +30,7 @@ class Incident(gis_models.Model):
 
     def save(self, *args, **kwargs):
         try:
-            prev = Incident.objects.get(event_id=self.event_id) 
+            prev = Incident.objects.get(event_id=self.event_id)
             if prev != self:
                 prev.delete()
                 super(Incident, self).save(*args, **kwargs)
