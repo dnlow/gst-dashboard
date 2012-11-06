@@ -1,11 +1,11 @@
-# CAL FIRE SLO Incident View
+# GST Dashboard
 
-A Django project dedicated to displaying CAD (computer aided dispatch) data online
+A web application used to analyze [computer aided dispatch](http://en.wikipedia.org/wiki/Computer-aided_dispatch) logs from [GeoSpatial Technologies, Inc](http://www.geospatialtech.com/).
 
 ## Setup
 
-1. Clone the repository: `git clone git@github.com:frewsxcv/cfslo-incident-viewer.git`
-2. Create a PostGIS database ([instructions from the PostGIS docs](http://postgis.refractions.net/documentation/manual-1.5/ch02.html#id2661925))
+1. Clone the repository: `git clone git@github.com:frewsxcv/gst-dashboard.git`
+2. [Create a PostGIS database](http://postgis.refractions.net/documentation/manual-1.5/ch02.html#id2661925))
 3. Copy the file `settings\_template.py` in the `server` directory and name it `settings.py`
 4. Modify the database fields in `settings.py` to match the PostgreSQL + PostGIS database that was set up in Step 2
 4. Create the database tables: `python server/manage.py syncdb`
