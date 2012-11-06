@@ -5,11 +5,12 @@ A web application used to analyze [computer aided dispatch](http://en.wikipedia.
 ## Setup
 
 1. Clone the repository: `git clone git@github.com:frewsxcv/gst-dashboard.git`
-2. [Create a PostGIS database](http://postgis.refractions.net/documentation/manual-1.5/ch02.html#id2661925))
-3. Copy the file `settings\_template.py` in the `server` directory and name it `settings.py`
-4. Modify the database fields in `settings.py` to match the PostgreSQL + PostGIS database that was set up in Step 2
-4. Create the database tables: `python server/manage.py syncdb`
-5. Import the incident logs: `python server/manage.py import`
+2. [Create a PostGIS database](http://postgis.refractions.net/documentation/manual-1.5/ch02.html#id2661925)
+3. Create a new PostgreSQL user that has read/write privileges on the new database
+4. Copy the file `settings\_template.py` in the `server` directory and name it `settings.py`
+5. Modify the database fields in `settings.py` to match the PostgreSQL + PostGIS database that was set up in Step 2
+6. Create the database tables: `python server/manage.py syncdb`
+7. Import the incident logs: `python server/manage.py import`
 
 ## Running
 
