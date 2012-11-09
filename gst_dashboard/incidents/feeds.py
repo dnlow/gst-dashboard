@@ -2,7 +2,7 @@ from django.contrib.gis.feeds import Feed
 from models import Incident
 
 
-class CADGeoRSS(Feed):
+class IncidentFeed(Feed):
     title = "San Luis Obispo County Fire Latest Incidents"
     link = "/"
     description = "Latest 15 incidents"

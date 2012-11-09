@@ -98,7 +98,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'gst_dashboard.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -115,9 +115,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.gis',
-    'viewer',
-    'incidents',
-    'dashboard',
+    'gst_dashboard.viewer',
+    'gst_dashboard.incidents',
+    'gst_dashboard.dashboard',
 )
 
 # A sample logging configuration. The only tangible logging

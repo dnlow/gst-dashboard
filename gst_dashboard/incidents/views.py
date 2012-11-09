@@ -1,7 +1,9 @@
-from models import Incident
+import json
+
 from django.shortcuts import render
 from django.http import HttpResponse
-import json
+
+from models import Incident
 
 
 def incidentInfo(request, incident_id):
