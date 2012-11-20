@@ -2,23 +2,17 @@ import json
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.decorators.http import require_GET
 
 from models import Incident
 
 
-def incidentInfo(request, incident_id):
-    incident = Incident.objects.get(name=incident_id)
-    return render(request, 'incident.html', {"incident": incident})
-
-
-def json_incident(request, number=None):
-    features = []
-    root = {}
+@require_GET
+def json_incident(request):
+    offset = int(request.GET.get("offset", 0))
     incidents = Incident.objects.geojson().order_by('-time')
-    incidents = incidents[:100] if not number else incidents[:number]
-    root['type'] = "FeatureCollection"
-    root['features'] = features
-    for incident in incidents:
+    features = []
+    for incident in incidents[offset:(offset+10)]:
         features.append({
             'type': 'Feature',
             'geometry': json.loads(incident.latlng.geojson),
@@ -32,4 +26,8 @@ def json_incident(request, number=None):
                 'time': str(incident.time)
             }
         })
-    return HttpResponse(json.dumps(root), mimetype='application/json')
+    ret = json.dumps({
+        "type": "FeatureCollection",
+        "features": features
+    })
+    return HttpResponse(ret, mimetype='application/json')
