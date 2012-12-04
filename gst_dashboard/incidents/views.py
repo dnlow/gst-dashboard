@@ -1,4 +1,5 @@
 import json
+import time
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -21,13 +22,17 @@ def json_incident(request):
                 'incident_id': incident.incident_id,
                 'jrsdtn': incident.jrsdtn,
                 'category': incident.category,
-                'details': incident.details,
-                'address': incident.address,
-                'time': str(incident.time)
+                'details': incident.details.title(),
+                'address': incident.address.title(),
+                'time': time.mktime(incident.time.timetuple()) * 1000
             }
         })
     ret = json.dumps({
         "type": "FeatureCollection",
-        "features": features
+        "features": features,
+        "metadata": {
+            "count": Incident.objects.count(),
+            "offset": offset
+        }
     })
     return HttpResponse(ret, mimetype='application/json')
