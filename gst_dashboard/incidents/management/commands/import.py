@@ -6,9 +6,9 @@ import os.path
 from django.core.management.base import BaseCommand
 from django.contrib.gis.geos import Point
 
-from incidents.models import Incident, LogFile
-from incidents.types import types
-from incidents.jurisdictions import jrsdtns
+from gst_dashboard.incidents.models import Incident, LogFile
+from gst_dashboard.incidents.types import types
+from gst_dashboard.incidents.jurisdictions import jrsdtns
 
 LOG_DIR = 'data/'
 
