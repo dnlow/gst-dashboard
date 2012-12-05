@@ -213,6 +213,7 @@
             }
             $row.append($type);
             $type.wrap("<td>");
+            $row.append("<td>" + inc.incidentId + "</td>");
             $row.append("<td>" + inc.jrsdtn + "</td>");
             $row.append("<td><i class='more-info icon-info-sign'></i></td>");
             $row.click(function () {
