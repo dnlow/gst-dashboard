@@ -130,7 +130,38 @@
         this.activeIncs = {};
         incs.forEach(function (inc) {
             var latLng = L.latLng(inc.lnglat[1], inc.lnglat[0]),
-                marker = L.marker(latLng);
+                marker,
+                iconPath = "/static/img/markers/marker-default.png";
+
+            switch (inc.category) {
+            case "Medical":
+                iconPath = "/static/img/markers/marker-info.png";
+                break;
+            case "Hazard":
+                iconPath = "/static/img/markers/marker-warning.png";
+                break;
+            case "Public Assist":
+                iconPath = "/static/img/markers/marker-success.png";
+                break;
+            case "Fire":
+                iconPath = "/static/img/markers/marker-important.png";
+                break;
+            case "Law Enforcement":
+                iconPath = "/static/img/markers/marker-inverse.png";
+                break;
+            }
+
+            marker = L.marker(latLng, {
+                "icon": L.icon({
+                    "iconUrl": iconPath,
+                    "iconSize": [25, 41],
+                    "iconAnchor": [12, 41],
+                    "popupAnchor": [1, -34],
+                    "shadowSize": [41, 41],
+                    "shadowUrl": "/static/img/markers/marker-shadow.png"
+                })
+            });
+
             marker.bindPopup([inc.address, inc.details].join("<br>"));
             that.incsLayer.addLayer(marker);
             that.activeIncs[inc.eventId] = marker;
