@@ -110,7 +110,7 @@
 
     Map.prototype.shrink = function () {
         $("#map-span").removeClass("span12").addClass("span5");
-        $("#incident-span").detach().appendTo("#first-row");
+        $("#incident-span").detach().prependTo("#first-row");
         $("#map-expand > span").text("Expand");
         this.map.invalidateSize(true);
     };
