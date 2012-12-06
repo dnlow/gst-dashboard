@@ -44,9 +44,14 @@
          <div class="navbar-inner">
             <div class="container">
                <a class="brand" href="#">San Luis Obispo County Fire: Incident Dashboard</a>
-               <ul class="nav">
-                  <li class="active"><a href="#">Dashboard</a></li>
-                  <li><a href="#">About</a></li>
+               <ul class="nav pull-right">
+                  <li class="dropdown">
+                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools&nbsp;<b class="caret"></b></a>
+                     <ul class="dropdown-menu">
+                        <li><a href="{% url incident-rss %}"><i class="icon-globe"></i>&nbsp;GeoRSS Feed</a></li>
+                        <li><a id="autorefresh" href="#"><i class="icon-refresh"></i>&nbsp;<span>Autorefresh: On</span></a></li>
+                     </ul>
+                  </li>
                </ul>
             </div>
          </div>
@@ -58,10 +63,6 @@
       <div class="container-fluid">
          <div id="first-row" class="row-fluid">
             <div id="incident-span" class="span7 ">
-               <div class="well well-small">
-                  <a href="{% url incident-rss %}"><button id="btn-georss" class="btn btn-small" type="button"><i class="icon-globe"></i>&nbsp;GeoRSS Feed</button></a>
-                  <button id="btn-autorefresh" class="btn btn-small btn-success pull-right" type="button"><i class="icon-refresh icon-white"></i>&nbsp;<span>Autorefresh: On</span></button>
-               </div>
                <div id="list-well" class="well well-small">
                   <table class="table table-condensed table-hover">
                      <thead>
@@ -92,9 +93,9 @@
          <div id="second-row" class="row-fluid"></div>
       </div>
 
-      <script src="{{ STATIC_URL }}/lib/bootstrap/js/bootstrap-alert.min.js"></script>
       <script src="{{ STATIC_URL }}/lib/leaflet/dist/leaflet.js"></script>
       <script src="{{ STATIC_URL }}/lib/jquery/jquery.min.js"></script>
+      <script src="{{ STATIC_URL }}/lib/bootstrap/js/bootstrap.js"></script>
       <script src="{{ STATIC_URL }}/js/dashboard.js"></script>
 
       <script type="text/javascript">

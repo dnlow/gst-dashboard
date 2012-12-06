@@ -190,12 +190,6 @@
         $("#next-button").click(function () {
             that.nextPage();
         });
-
-        $("#btn-autorefresh").toggle(function () {
-            that.disableUpdates();
-        }, function () {
-            that.enableUpdates();
-        });
     };
 
     List.prototype.setMap = function (map) {
@@ -280,16 +274,14 @@
 
     List.prototype.enableUpdates = function () {
         var that = this;
-        $("#btn-autorefresh").removeClass("btn-danger").addClass("btn-success");
-        $("#btn-autorefresh").children("span").text("Autorefresh: On");
+        $("#autorefresh").children("span").text("Autorefresh: On");
         this.updateId = window.setInterval(function () {
             that.update();
         }, 120000);
     };
 
     List.prototype.disableUpdates = function () {
-        $("#btn-autorefresh").removeClass("btn-success").addClass("btn-danger");
-        $("#btn-autorefresh").children("span").text("Autorefresh: Off");
+        $("#autorefresh").children("span").text("Autorefresh: Off");
         window.clearInterval(this.updateId);
     };
 
@@ -340,5 +332,12 @@
 
         list.setMap(map);
         map.setList(list);
+
+        $("#autorefresh").toggle(function () {
+            list.disableUpdates(); // should not be a method on the list
+        }, function () {
+            list.enableUpdates();
+        });
+
     });
 }());
