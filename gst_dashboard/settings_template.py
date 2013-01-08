@@ -115,6 +115,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.gis',
+
+    'djcelery',
+
     'gst_dashboard.viewer',
     'gst_dashboard.incidents',
     'gst_dashboard.dashboard',
@@ -142,3 +145,7 @@ LOGGING = {
         },
     }
 }
+
+# Celery
+import djcelery
+djcelery.setup_loader()
