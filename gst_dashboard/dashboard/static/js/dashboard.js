@@ -81,7 +81,7 @@
 
         aerial = L.layerGroup([mqSat, mbStreets]);
 
-        this.map.addLayer(mbTerrain);
+        this.map.addLayer(mqOsm);
 
         this.control.addBaseLayer(mbTerrain, "MapBox Terrain");
         this.control.addBaseLayer(mqOsm, "MapQuest OSM");
