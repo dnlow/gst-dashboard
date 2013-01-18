@@ -6,31 +6,7 @@
       <link href="{{ STATIC_URL }}/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
       <link rel="stylesheet" href="{{ STATIC_URL }}/lib/leaflet/dist/leaflet.css" />
       <!--[if lte IE 8]><link rel="stylesheet" href="js/leaflet/dist/leaflet.ie.css" /><![endif]-->
-      <style>
-         body {
-            padding-top: 60px;
-         }
-         @media (max-width: 979px) {
-            body {
-               padding-top: 0px;
-            }
-         }
-
-         #map {
-            margin-bottom: 9px;
-            height: 400px;
-         }
-
-         #list-well {
-            overflow-x: auto;
-         }
-
-         /* overriding bootstrap */
-         .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-            background-color: #eee;
-            cursor: pointer;
-         }
-      </style>
+      <link rel="stylesheet" href="{{ STATIC_URL }}/css/dashboard.css" />
    </head>
    <body>
 
