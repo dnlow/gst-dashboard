@@ -72,21 +72,34 @@
         // http://developer.mapquest.com/web/products/open/map give credit/attribution to mapquest
         // http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Tile_servers
 
-        var mqSat, mqOsm, mbTerrain, mbStreets, aerial;
+        var that = this;
 
-        mqSat = L.tileLayer('http://oatile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg');
-        mqOsm = L.tileLayer('http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg');
-        mbTerrain = L.tileLayer('http://api.tiles.mapbox.com/v3/frewsxcv.map-evj4te62/{z}/{x}/{y}.jpg90');
-        mbStreets = L.tileLayer('http://api.tiles.mapbox.com/v3/frewsxcv.map-aag75ha5/{z}/{x}/{y}.png64');
+        var mbStreetsUrl = "http://api.tiles.mapbox.com/v3/frewsxcv.map-aag75ha5.jsonp";
+        var mbTerrainUrl = "http://api.tiles.mapbox.com/v3/frewsxcv.map-evj4te62.jsonp";
 
-        aerial = L.layerGroup([mqSat, mbStreets]);
+        var mqSat = L.tileLayer('http://oatile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg');
+        var mqOsm = L.tileLayer('http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg');
 
-        this.map.addLayer(mqOsm);
+        // Add 'Satellite' layer
+        wax.tilejson(mbStreetsUrl, function (tilejson) {
+            var mbStreets = new wax.leaf.connector(tilejson),
+                aerial = L.layerGroup([mqSat, mbStreets]);
+            that.control.addBaseLayer(aerial, "Satellite");
+        });
 
-        this.control.addBaseLayer(mbTerrain, "MapBox Terrain");
-        this.control.addBaseLayer(mqOsm, "MapQuest OSM");
-        this.control.addBaseLayer(aerial, "Aerials");
+        // Add 'Terrain' layer
+        wax.tilejson(mbTerrainUrl, function (tilejson) {
+            var mbTerrain = new wax.leaf.connector(tilejson);
+            that.control.addBaseLayer(mbTerrain, "Terrain");
 
+            // Make this the default layer
+            that.map.addLayer(mbTerrain);
+        });
+
+        // Add 'Streets' layer
+        this.control.addBaseLayer(mqOsm, "Streets");
+
+        // Add incidents
         this.incsLayer = L.layerGroup().addTo(this.map);
         this.control.addOverlay(this.incsLayer, "Incidents");
     };
