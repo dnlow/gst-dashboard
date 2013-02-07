@@ -5,8 +5,8 @@ A web application used to analyze [computer aided dispatch](http://en.wikipedia.
 ## Setup
 
 1. Clone the repository: `git clone git@github.com:frewsxcv/gst-dashboard.git`
-2. Install the requirements: `pip install -r requirements.txt`
-3. [Create a PostGIS database](http://postgis.refractions.net/documentation/manual-1.5/ch02.html#id2661925)
+2. [Create a PostGIS database](http://postgis.refractions.net/documentation/manual-1.5/ch02.html#id2661925)
+3. Install the requirements: `pip install -r requirements.txt`
 4. Create a new PostgreSQL user that has read/write privileges on the new database
 5. Copy the file `settings\_template.py` in the `server` directory and name it `settings.py`
 6. Modify the database fields in `settings.py` to match the PostgreSQL + PostGIS database that was set up in Step 2
