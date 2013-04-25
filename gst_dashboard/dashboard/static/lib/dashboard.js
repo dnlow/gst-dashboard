@@ -285,14 +285,12 @@
 
     List.prototype.enableUpdates = function () {
         var that = this;
-        $("#autorefresh").children("span").text("Autorefresh: On");
         this.updateId = window.setInterval(function () {
             that.update();
         }, 120000);
     };
 
     List.prototype.disableUpdates = function () {
-        $("#autorefresh").children("span").text("Autorefresh: Off");
         window.clearInterval(this.updateId);
     };
 
@@ -345,12 +343,5 @@
 
         list.setMap(map);
         map.setList(list);
-
-        $("#autorefresh").toggle(function () {
-            list.disableUpdates(); // should not be a method on the list
-        }, function () {
-            list.enableUpdates();
-        });
-
     });
 }());
