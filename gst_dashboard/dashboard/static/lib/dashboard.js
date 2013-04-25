@@ -311,8 +311,9 @@
 
     List.prototype.nextPage = function () {
         var that = this;
-        if (!$("#next-button").hasClass("disabled")) {
+        if (this.page / 10 < this.numPages) {
             this.page += 1;
+            $("#next-button").addClass("disabled");
             this.loadIncidents(this.page * 10, function () {
                 if ($("#prev-button").hasClass("disabled")) {
                     $("#prev-button").removeClass("disabled");
@@ -324,8 +325,9 @@
 
     List.prototype.prevPage = function () {
         var that = this;
-        if (!$("#prev-button").hasClass("disabled")) {
+        if (this.page / 10 > 0) {
             this.page -= 1;
+            $("#prev-button").addClass("disabled");
             this.loadIncidents(this.page * 10, function () {
                 if ($("#next-button").hasClass("disabled")) {
                     $("#next-button").removeClass("disabled");
