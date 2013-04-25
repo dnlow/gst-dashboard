@@ -41,6 +41,50 @@
 
 //---------------------------------------------------------------------------//
 
+    // TODO: This really needs to use templating instead of dynamically generating html each time
+    var Modal = function (inc) {
+        var html = "";
+
+        html += "<tr><td>Location</td>";
+        html += "<td>" + inc.address + "</td></tr>";
+
+        html += "<tr><td>Longitude</td>";
+        html += "<td>" + inc.lnglat[0] + "</td></tr>";
+
+        html += "<tr><td>Latitude</td>";
+        html += "<td>" + inc.lnglat[1] + "</td></tr>";
+
+        html += "<tr><td>Jurisdiction</td>";
+        html += "<td>" + inc.jrsdtn + "</td></tr>";
+
+        html += "<tr><td>Category</td>";
+        html += "<td>" + inc.category + "</td></tr>";
+
+        html += "<tr><td>Details</td>";
+        html += "<td>" + inc.details + "</td></tr>";
+
+        html += "<tr><td>Event Id</td>";
+        html += "<td>" + inc.eventId + "</td></tr>";
+
+        html += "<tr><td>Incident Id</td>";
+        html += "<td>" + inc.incidentId + "</td></tr>";
+
+        html += "<tr><td>Time</td>";
+        html += "<td>" + inc.datetime.getTime() + "</td></tr>";
+
+        html += "<tr><td>Date</td>";
+        html += "<td>" + inc.datetime.getDate() + "</td></tr>";
+
+        $("#inc-modal-title").text(inc.incidentId);
+        $("#inc-modal-body").html(html);
+    };
+
+    Modal.prototype.show = function () {
+        $("#inc-modal").modal();
+    };
+
+//---------------------------------------------------------------------------//
+
     var Map = function () {
         var that = this;
 
@@ -228,7 +272,7 @@
         }
 
         this.incidents.forEach(function (inc) {
-            var $row = $("<tr>"), $type;
+            var $row = $("<tr>"), $type, $info;
             $row.append("<td>" + inc.datetime.getDate() + "</td>");
             $row.append("<td>" + inc.datetime.getTime() + "</td>");
             $type = $("<span class='label'>" + inc.details + "</span>");
@@ -253,7 +297,14 @@
             $type.wrap("<td>");
             $row.append("<td>" + inc.incidentId + "</td>");
             $row.append("<td>" + inc.jrsdtn + "</td>");
-            $row.append("<td><i class='more-info icon-info-sign'></i></td>");
+
+            $info = $("<td><i class='more-info icon-info-sign'></i></td>");
+            $info.click(function () {
+                var modal = new Modal(inc);
+                modal.show();
+            });
+            $row.append($info);
+
             $row.click(function () {
                 that.map.openInc(inc.eventId);
             });
@@ -261,10 +312,6 @@
         });
         this.map.clearIncs();
         this.map.addIncs(this.incidents);
-
-        $(".more-info").click(function () {
-            window.alert("Additional Incident information functionality coming soon.");
-        });
     };
 
     // Check for new incidents, updating the dashboard
