@@ -273,10 +273,9 @@
         $.getJSON("/incidents/json?offset=" + this.page * 10, function (geojson) {
             if (geojson.features[0].properties.event_id !== that.incidents[0].eventId) {
                 that.numPages = Math.ceil(geojson.metadata.count / 10);
-                that.incidents = [];
                 $("#last-page").text(that.numPages);
-                geojson.features.forEach(function (inc) {
-                    that.incidents.push(new Incident(inc));
+                that.incidents = geojson.features.map(function (inc) {
+                    return new Incident(inc);
                 });
                 that.updateView();
             }
