@@ -121,7 +121,7 @@
         var mbStreetsUrl = "http://api.tiles.mapbox.com/v3/frewsxcv.map-aag75ha5.jsonp";
         var mbTerrainUrl = "http://api.tiles.mapbox.com/v3/frewsxcv.map-evj4te62.jsonp";
 
-        var mqSat = L.tileLayer('http://oatile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg');
+        var mqSat = L.tileLayer('http://gis.slocounty.ca.gov/arcgis/rest/services/Aerials/2011_1_FT_AERIAL/MapServer/tile/{z}/{y}/{x}');
         var mqOsm = L.tileLayer('http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg');
 
         // Add 'Satellite' layer
