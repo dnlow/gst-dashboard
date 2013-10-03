@@ -4,8 +4,10 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link href="{{ STATIC_URL }}/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
       <link href="{{ STATIC_URL }}/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-      <link rel="stylesheet" href="{{ STATIC_URL }}/lib/leaflet/dist/leaflet.css" />
-      <!--[if lte IE 8]><link rel="stylesheet" href="js/leaflet/dist/leaflet.ie.css" /><![endif]-->
+      <link href='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet' />
+      <!--[if lte IE 8]>
+        <link href='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' />
+      <![endif]-->
       <link rel="stylesheet" href="{{ STATIC_URL }}/css/dashboard.css" />
    </head>
    <body>
@@ -85,8 +87,7 @@
       </div> <!-- row fluid -->
       <div id="second-row" class="row-fluid"></div>
 
-      <script src="{{ STATIC_URL }}/lib/leaflet/dist/leaflet.js"></script>
-      <script src="{{ STATIC_URL }}/lib/wax/dist/wax.leaf.min.js"></script>
+      <script src='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
       <script src="{{ STATIC_URL }}/lib/jquery/jquery.min.js"></script>
       <script src="{{ STATIC_URL }}/lib/bootstrap/js/bootstrap.js"></script>
       <script src="{{ STATIC_URL }}/lib/dashboard.js"></script>
