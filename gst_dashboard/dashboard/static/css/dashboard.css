@@ -1,11 +1,5 @@
 body {
-   padding-top: 60px;
-}
-
-@media (max-width: 979px) {
-   body {
-      padding-top: 0px;
-   }
+   padding-top: 70px;
 }
 
 #map {
@@ -15,6 +9,26 @@ body {
 
 #list-well {
    overflow-x: auto;
+}
+
+.label-publicassist {
+   background-color: #468847;
+}
+
+.label-lawenforcement {
+   background-color: #333333;
+}
+
+.label-hazard {
+   background-color: #f89406;
+}
+
+.label-medical {
+   background-color: #3a87ad;
+}
+
+.label-fire {
+   background-color: #b94a48;
 }
 
 /* overriding bootstrap */

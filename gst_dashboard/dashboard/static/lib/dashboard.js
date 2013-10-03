@@ -159,14 +159,14 @@
     };
 
     Map.prototype.expand = function () {
-        $("#map-span").removeClass("span5").addClass("span12");
+        $("#map-span").removeClass("col-md-5").addClass("col-md-12");
         $("#incident-span").detach().appendTo("#second-row");
         $("#map-expand > span").text("Shrink");
         this.map.invalidateSize(true);
     };
 
     Map.prototype.shrink = function () {
-        $("#map-span").removeClass("span12").addClass("span5");
+        $("#map-span").removeClass("col-md-12").addClass("col-md-5");
         $("#incident-span").detach().prependTo("#first-row");
         $("#map-expand > span").text("Expand");
         this.map.invalidateSize(true);
@@ -192,19 +192,19 @@
 
             switch (inc.category) {
             case "Medical":
-                iconPath = "/static/img/markers/marker-info.png";
+                iconPath = "/static/img/markers/marker-medical.png";
                 break;
             case "Hazard":
-                iconPath = "/static/img/markers/marker-warning.png";
+                iconPath = "/static/img/markers/marker-hazard.png";
                 break;
             case "Public Assist":
-                iconPath = "/static/img/markers/marker-success.png";
+                iconPath = "/static/img/markers/marker-publicassist.png";
                 break;
             case "Fire":
-                iconPath = "/static/img/markers/marker-important.png";
+                iconPath = "/static/img/markers/marker-fire.png";
                 break;
             case "Law Enforcement":
-                iconPath = "/static/img/markers/marker-inverse.png";
+                iconPath = "/static/img/markers/marker-lawenforcement.png";
                 break;
             }
 
@@ -278,19 +278,19 @@
             $type = $("<span class='label'>" + inc.details + "</span>");
             switch (inc.category) {
             case "Medical":
-                $type.addClass("label-info");
+                $type.addClass("label-medical");
                 break;
             case "Hazard":
-                $type.addClass("label-warning");
+                $type.addClass("label-hazard");
                 break;
             case "Public Assist":
-                $type.addClass("label-success");
+                $type.addClass("label-publicassist");
                 break;
             case "Fire":
-                $type.addClass("label-important");
+                $type.addClass("label-fire");
                 break;
             case "Law Enforcement":
-                $type.addClass("label-inverse");
+                $type.addClass("label-lawenforcement");
                 break;
             }
             $row.append($type);
