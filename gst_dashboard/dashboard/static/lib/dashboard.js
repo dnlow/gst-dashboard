@@ -98,11 +98,8 @@
         this.addControls();
         this.addLayers();
 
-        $("#map-expand").toggle(function () {
-            that.expand();
-        }, function () {
-            that.shrink();
-        });
+        this.expanded = false;
+        $("#map-expand").click(function () {that.expand();});
     };
 
     Map.prototype.addControls = function () {
@@ -159,17 +156,20 @@
     };
 
     Map.prototype.expand = function () {
-        $("#map-span").removeClass("col-md-5").addClass("col-md-12");
-        $("#incident-span").detach().appendTo("#second-row");
-        $("#map-expand > span").text("Shrink");
+        if (this.expanded) {
+            $("#map-span").removeClass("col-md-12").addClass("col-md-5");
+            $("#incident-span").detach().prependTo("#first-row");
+            $("#map-expand > span").text("Expand");
+        } else {
+            $("#map-span").removeClass("col-md-5").addClass("col-md-12");
+            $("#incident-span").detach().appendTo("#second-row");
+            $("#map-expand > span").text("Shrink");
+        }
+        this.expanded = !this.expanded;
         this.map.invalidateSize(true);
     };
 
     Map.prototype.shrink = function () {
-        $("#map-span").removeClass("col-md-12").addClass("col-md-5");
-        $("#incident-span").detach().prependTo("#first-row");
-        $("#map-expand > span").text("Expand");
-        this.map.invalidateSize(true);
     };
 
     Map.prototype.openInc = function (eventId) {
