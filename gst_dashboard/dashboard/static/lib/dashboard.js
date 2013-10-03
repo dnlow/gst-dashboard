@@ -115,27 +115,20 @@
 
         var that = this;
 
-        var mbStreetsUrl = "http://api.tiles.mapbox.com/v3/frewsxcv.map-aag75ha5.jsonp";
-        var mbTerrainUrl = "http://api.tiles.mapbox.com/v3/frewsxcv.map-evj4te62.jsonp";
+        var mbStreetsUrl = "frewsxcv.map-aag75ha5";
+        var mbTerrainUrl = "frewsxcv.map-evj4te62";
 
         var mqSat = L.tileLayer('http://gis.slocounty.ca.gov/arcgis/rest/services/Aerials/2011_1_FT_AERIAL/MapServer/tile/{z}/{y}/{x}');
         var mqOsm = L.tileLayer('http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg');
 
         // Add 'Satellite' layer
-        wax.tilejson(mbStreetsUrl, function (tilejson) {
-            var mbStreets = new wax.leaf.connector(tilejson),
-                aerial = L.layerGroup([mqSat, mbStreets]);
-            that.control.addBaseLayer(aerial, "Satellite");
-        });
+        var streetsOverlay = L.mapbox.tileLayer(mbStreetsUrl);
+        var satellite = L.layerGroup([mqSat, streetsOverlay]);
+        that.control.addBaseLayer(satellite, "Satellite");
 
         // Add 'Terrain' layer
-        wax.tilejson(mbTerrainUrl, function (tilejson) {
-            var mbTerrain = new wax.leaf.connector(tilejson);
-            that.control.addBaseLayer(mbTerrain, "Terrain");
-
-            // Make this the default layer
-            that.map.addLayer(mbTerrain);
-        });
+        var terrain = L.mapbox.tileLayer(mbTerrainUrl).addTo(this.map);
+        that.control.addBaseLayer(terrain, "Terrain");
 
         // Add 'Streets' layer
         this.control.addBaseLayer(mqOsm, "Streets");
