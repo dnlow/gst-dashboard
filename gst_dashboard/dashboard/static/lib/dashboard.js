@@ -97,9 +97,6 @@
 
         this.addControls();
         this.addLayers();
-
-        this.expanded = false;
-        $("#map-expand").click(function () {that.expand();});
     };
 
     Map.prototype.addControls = function () {
@@ -146,23 +143,6 @@
             that.list.updateView();
         });
 
-    };
-
-    Map.prototype.expand = function () {
-        if (this.expanded) {
-            $("#map-span").removeClass("col-md-12").addClass("col-md-5");
-            $("#incident-span").detach().prependTo("#first-row");
-            $("#map-expand > span").text("Expand");
-        } else {
-            $("#map-span").removeClass("col-md-5").addClass("col-md-12");
-            $("#incident-span").detach().appendTo("#second-row");
-            $("#map-expand > span").text("Shrink");
-        }
-        this.expanded = !this.expanded;
-        this.map.invalidateSize(true);
-    };
-
-    Map.prototype.shrink = function () {
     };
 
     Map.prototype.openInc = function (eventId) {
