@@ -14,7 +14,7 @@
 
       <!-- navbar -->
 
-      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <nav class="navbar navbar-default" role="navigation">
         <div class="container">
             <div class="navbar-header">
                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -28,7 +28,7 @@
 
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                <ul class="nav navbar-nav navbar-right">
-                   <li><a href="{% url incident-rss %}"><span class="glyphicon glyphicon-globe"></span>&nbsp;GeoRSS Feed</a></li>
+                 <a class="btn btn-default navbar-btn" href="{% url incident-rss %}"><span class="glyphicon glyphicon-globe"></span>&nbsp;GeoRSS Feed</a>
                </ul>
             </div>
          </div>
