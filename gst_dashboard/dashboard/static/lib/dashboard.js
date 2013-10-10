@@ -271,7 +271,7 @@
             $row.append("<td>" + inc.incidentId + "</td>");
             $row.append("<td>" + inc.jrsdtn + "</td>");
 
-            $info = $("<td class='text-right'><button class='more-info btn btn-xs'><span class='glyphicon glyphicon-info-sign'></span></button></td>");
+            $info = $("<td class='text-right'><button class='more-info btn btn-default btn-xs'><span class='glyphicon glyphicon-info-sign'></span></button></td>");
             $info.click(function () {
                 var modal = new Modal(inc);
                 modal.show();
