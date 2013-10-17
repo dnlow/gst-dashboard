@@ -6,6 +6,8 @@
    overflow-x: auto;
 }
 
+/* custom labels */
+
 .label-publicassist {
    background-color: #468847;
 }
@@ -27,7 +29,14 @@
 }
 
 /* overriding bootstrap */
+
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
    background-color: #eee;
    cursor: pointer;
+}
+
+/* overriding bootstrap-datepicker */
+
+.datepicker {
+   z-index: 100000;  /* make sure datepicker appears on top of modal */
 }

@@ -42,7 +42,7 @@
 //---------------------------------------------------------------------------//
 
     // TODO: This really needs to use templating instead of dynamically generating html each time
-    var Modal = function (inc) {
+    var IncModal = function (inc) {
         var html = "";
 
         html += "<tr><td>Location</td>";
@@ -79,8 +79,17 @@
         $("#inc-modal-body").html(html);
     };
 
-    Modal.prototype.show = function () {
+    IncModal.prototype.show = function () {
         $("#inc-modal").modal();
+    };
+
+
+    var FilterModal = function () {
+    };
+
+    FilterModal.prototype.show = function () {
+        $("#filter-modal").modal();
+        $("#filter-datepicker").datepicker();
     };
 
 //---------------------------------------------------------------------------//
@@ -214,6 +223,12 @@
         this.incidents = [];
         this.enableUpdates();
 
+        this.filterModal = new FilterModal();
+
+        $("#filter-button").click(function () {
+            that.filterModal.show();
+        });
+
         $("#prev-button").click(function () {
             that.prevPage();
         });
@@ -274,7 +289,7 @@
 
             $info = $("<td class='text-right'><button class='more-info btn btn-default btn-xs'><span class='glyphicon glyphicon-info-sign'></span></button></td>");
             $info.click(function () {
-                var modal = new Modal(inc);
+                var modal = new IncModal(inc);
                 modal.show();
             });
             $row.append($info);
