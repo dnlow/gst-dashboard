@@ -76,32 +76,32 @@
                   <input type="text" class="form-control" id="incident-id" placeholder="Incident ID">
                 </div>
               </div>
-              <div class="form-group">
+              <div id="filter-categories" class="form-group">
                 <label class="col-lg-3 control-label">Categories</label>
                 <div class="col-lg-9">
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" checked>&nbsp;<span class="label label-publicassist">Public Assist</span>
+                      <input type="checkbox" data-category="Public Assist" checked>&nbsp;<span class="label label-publicassist">Public Assist</span>
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" checked>&nbsp;<span class="label label-lawenforcement">Law Enforcement</span>
+                      <input type="checkbox" data-category="Law Enforcement" checked>&nbsp;<span class="label label-lawenforcement">Law Enforcement</span>
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" checked>&nbsp;<span class="label label-hazard">Hazard</span>
+                      <input type="checkbox" data-category="Hazard" checked>&nbsp;<span class="label label-hazard">Hazard</span>
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" checked>&nbsp;<span class="label label-medical">Medical</span>
+                      <input type="checkbox" data-category="Medical" checked>&nbsp;<span class="label label-medical">Medical</span>
                     </label>
                   </div>
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" checked>&nbsp;<span class="label label-fire">Fire</span>
+                      <input type="checkbox" data-category="Fire" checked>&nbsp;<span class="label label-fire">Fire</span>
                     </label>
                   </div>
                 </div>
@@ -109,7 +109,7 @@
               <div class="form-group">
                 <label class="col-lg-3 control-label">Date</label>
                 <div class="col-lg-9">
-                  <input placeholder="dd/mm/yyyy" id="filter-datepicker" type="date" class="form-control">
+                  <input placeholder="dd/mm/yyyy" id="filter-datepicker" class="form-control">
                 </div>
               </div>
             </form>
@@ -145,10 +145,10 @@
             <tbody id="incident-list"></tbody>
           </table>
           <p class="text-center">
-          <button id="prev-button" class="btn btn-small btn-default disabled pull-left"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Newer</button>
+          <button id="filter-button" class="btn btn-small btn-default pull-left"><span class="glyphicon glyphicon-filter"></span>&nbsp;Filter</button>
           Page <span id="cur-page">1</span> of <span id="last-page"></span>
-          <button id="filter-button" class="btn btn-small btn-default"><span class="glyphicon glyphicon-filter"></span>&nbsp;Filter</button>
           <button id="next-button" class="btn btn-small btn-default disabled pull-right">Older&nbsp;<span class="glyphicon glyphicon-arrow-right"></i></button>
+          <button id="prev-button" class="btn btn-small btn-default disabled pull-right"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Newer</button>
           </p>
         </div>
       </div>
