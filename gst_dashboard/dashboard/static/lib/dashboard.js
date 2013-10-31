@@ -42,7 +42,7 @@
 //---------------------------------------------------------------------------//
 
     // TODO: This really needs to use templating instead of dynamically generating html each time
-    var Modal = function (inc) {
+    var IncModal = function (inc) {
         var html = "";
 
         html += "<tr><td>Location</td>";
@@ -79,8 +79,56 @@
         $("#inc-modal-body").html(html);
     };
 
-    Modal.prototype.show = function () {
+    IncModal.prototype.show = function () {
         $("#inc-modal").modal();
+    };
+
+
+    var FilterModal = function (list) {
+        this.list = list;
+
+        $("#incident-id").val("");
+        $("filter-datepicker").val("");
+        $("#filter-categories input:checkbox:not(:checked)").each(function () {
+            console.log($(this));
+            $(this).prop('checked', true);
+        });
+    };
+
+    FilterModal.prototype.show = function () {
+        var that = this;
+        $("#filter-modal").modal();
+        $("#filter-datepicker").datepicker();
+        $("#filter-modal").on("hide.bs.modal", function () {
+            that.list.loadIncidents(0, function () {
+                that.list.updateView();
+            });
+        });
+    };
+
+    FilterModal.prototype.urlParams = function () {
+        var ret = "";
+
+        var incidentid = $("#incident-id").val();
+        if (incidentid.length > 0) {
+            ret += "&incidentid=" + window.encodeURIComponent(incidentid);
+        }
+
+        var $categories = $("#filter-categories input:checkbox:not(:checked)");
+        if ($categories.length > 0) {
+            var categories = [];
+            $categories.each(function () {
+                categories.push($(this).data("category"));
+            });$
+            ret += "&categories=" + window.encodeURIComponent(categories.join(","));
+        }
+
+        var date = $("#filter-datepicker").val();
+        if (date.length > 0) {
+            ret += "&date=" + window.encodeURIComponent(date);
+        }
+
+        return ret;
     };
 
 //---------------------------------------------------------------------------//
@@ -140,8 +188,8 @@
         var that = this;
 
         this.list = list;
-        this.list.loadIncidents(0, function () {
-            that.list.updateView();
+        list.loadIncidents(0, function () {
+            list.updateView();
         });
 
     };
@@ -214,6 +262,12 @@
         this.incidents = [];
         this.enableUpdates();
 
+        this.filterModal = new FilterModal(this);
+
+        $("#filter-button").click(function () {
+            that.filterModal.show();
+        });
+
         $("#prev-button").click(function () {
             that.prevPage();
         });
@@ -274,7 +328,7 @@
 
             $info = $("<td class='text-right'><button class='more-info btn btn-default btn-xs'><span class='glyphicon glyphicon-info-sign'></span></button></td>");
             $info.click(function () {
-                var modal = new Modal(inc);
+                var modal = new IncModal(inc);
                 modal.show();
             });
             $row.append($info);
@@ -314,16 +368,24 @@
         window.clearInterval(this.updateId);
     };
 
+    List.prototype._getUrl = function (offset) {
+        return "/incidents/json?offset=" + offset + this.filterModal.urlParams();
+    };
+
     List.prototype.loadIncidents = function (offset, callback) {
+        offset = offset || 0;
         var that = this;
-        $.getJSON("/incidents/json?offset=" + offset, function (geojson) {
+        var url = this._getUrl(offset);
+        $.getJSON(url, function (geojson) {
             that.numPages = Math.ceil(geojson.metadata.count / 10);
             that.incidents = [];
             $("#last-page").text(that.numPages);
             geojson.features.forEach(function (inc) {
                 that.incidents.push(new Incident(inc));
             });
-            callback();
+            if (callback) {
+                callback();
+            }
         });
     };
 

@@ -1,3 +1,4 @@
+from datetime import date
 import json
 import time
 
@@ -11,7 +12,26 @@ from models import Incident
 @require_GET
 def json_incident(request):
     offset = int(request.GET.get("offset", 0))
-    incidents = Incident.objects.geojson().order_by('-time')
+
+    incidents = Incident.objects
+
+    incidentid = request.GET.get("incidentid", False)
+    if incidentid:
+        incidents = incidents.filter(incident_id__icontains=incidentid)
+
+    filterdate = request.GET.get("date", False)
+    if filterdate:
+        month, date, year = filterdate.split("/")
+        incidents = incidents.filter(time__year=year, time__month=month,
+                                     time__day=date)
+
+    ignore_categories = request.GET.get("categories", False)
+    if ignore_categories:
+        ignore_categories = ignore_categories.split(",")
+        incidents = incidents.exclude(category__in=ignore_categories)
+
+    incidents = incidents.geojson().order_by('-time')
+
     features = []
     for incident in incidents[offset:(offset+10)]:
         features.append({
@@ -31,7 +51,7 @@ def json_incident(request):
         "type": "FeatureCollection",
         "features": features,
         "metadata": {
-            "count": Incident.objects.count(),
+            "count": incidents.count(),
             "offset": offset
         }
     })
