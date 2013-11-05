@@ -345,7 +345,8 @@
     // Check for new incidents, updating the dashboard
     List.prototype.update = function () {
         var that = this;
-        $.getJSON("/incidents/json?offset=" + this.page * 10, function (geojson) {
+        var url = this._getUrl(offset);
+        $.getJSON(url, function (geojson) {
             if (geojson.features[0].properties.event_id !== that.incidents[0].eventId) {
                 that.numPages = Math.ceil(geojson.metadata.count / 10);
                 $("#last-page").text(that.numPages);
