@@ -344,7 +344,7 @@
     // Check for new incidents, updating the dashboard
     List.prototype.update = function () {
         var that = this;
-        var url = this._getUrl(offset);
+        var url = this._getUrl();
         $.getJSON(url, function (geojson) {
             if (geojson.features[0].properties.event_id !== that.incidents[0].eventId) {
                 that.numPages = Math.ceil(geojson.metadata.count / 10);
@@ -363,6 +363,7 @@
     };
 
     List.prototype._getUrl = function (offset) {
+        offset = offset || 0;
         return "/incidents/json?offset=" + offset + this.filterModal.urlParams();
     };
 
