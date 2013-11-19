@@ -359,9 +359,7 @@
 
     List.prototype.enableUpdates = function () {
         var that = this;
-        this.updateId = window.setInterval(function () {
-            that.update();
-        }, 120000);
+        window.setInterval(function () { that.update(); }, 120000);
     };
 
     List.prototype._getUrl = function (offset) {
