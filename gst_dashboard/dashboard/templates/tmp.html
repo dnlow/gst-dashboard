@@ -124,32 +124,47 @@
     <!-- body -->
 
     <div class="container">
-      <div class="row-fluid">
-        <div class="col-md-12 well well-sm">
-          <div id="map"></div>
+      <div class="well well-sm">
+        <div class="row">
+          <div class="col-md-12">
+            <div id="map"></div>
+          </div>
         </div>
       </div>
-      <div class="row-fluid">
-        <div class="col-md-12 well well-sm">
 
-          <table class="table table-condensed table-hover">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Type</th>
-                <th>Incident ID</th>
-                <th>Jurisdiction</th>
-              </tr>
-            </thead>
-            <tbody id="incident-list"></tbody>
-          </table>
-          <p class="text-center">
-          <button id="filter-button" class="btn btn-small btn-default pull-left"><span class="glyphicon glyphicon-filter"></span>&nbsp;Filter</button>
-          Page <span id="cur-page">1</span> of <span id="last-page"></span>
-          <button id="next-button" class="btn btn-small btn-default disabled pull-right">Older&nbsp;<span class="glyphicon glyphicon-arrow-right"></i></button>
-          <button id="prev-button" class="btn btn-small btn-default disabled pull-right"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Newer</button>
-          </p>
+      <div class="well well-sm">
+        <div class="row">
+          <div class="col-md-4">
+            <button id="filter-button" class="btn btn-small btn-default pull-left"><span class="glyphicon glyphicon-filter"></span>&nbsp;Filter</button>
+          </div>
+          <div class="col-md-4" style="text-align: center; vertical-align: middle; padding-top: 5px;">
+            Page <span id="cur-page" class="badge">1</span> of <span id="last-page" class="badge">1</span>
+          </div>
+          <div class="col-md-4">
+            <div class="btn-group pull-right">
+              <button id="prev-button" class="btn btn-small btn-default disabled"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Newer</button>
+              <button id="next-button" class="btn btn-small btn-default disabled">Older&nbsp;<span class="glyphicon glyphicon-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="well well-sm">
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table table-condensed table-hover" style="margin-bottom: 0">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Type</th>
+                  <th>Incident ID</th>
+                  <th>Jurisdiction</th>
+                </tr>
+              </thead>
+              <tbody id="incident-list"></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
