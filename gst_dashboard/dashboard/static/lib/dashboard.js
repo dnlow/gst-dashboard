@@ -90,7 +90,6 @@
         $("#incident-id").val("");
         $("filter-datepicker").val("");
         $("#filter-categories input:checkbox:not(:checked)").each(function () {
-            console.log($(this));
             $(this).prop('checked', true);
         });
     };
