@@ -364,10 +364,6 @@
         }, 120000);
     };
 
-    List.prototype.disableUpdates = function () {
-        window.clearInterval(this.updateId);
-    };
-
     List.prototype._getUrl = function (offset) {
         return "/incidents/json?offset=" + offset + this.filterModal.urlParams();
     };
