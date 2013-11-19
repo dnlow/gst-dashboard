@@ -80,7 +80,10 @@
     };
 
     IncModal.prototype.show = function () {
-        $("#inc-modal").modal();
+        $("#inc-modal").modal({
+            "backdrop": false,
+            "keyboard": false,
+        });
     };
 
 
@@ -96,9 +99,12 @@
 
     FilterModal.prototype.show = function () {
         var that = this;
-        $("#filter-modal").modal();
+        $("#filter-modal").modal({
+            "backdrop": false,
+            "keyboard": false,
+        });
         $("#filter-datepicker").datepicker();
-        $("#filter-modal").on("hide.bs.modal", function () {
+        $("#filter-save-btn").click(function () {
             that.list.loadIncidents(0, function () {
                 that.list.updateView();
             });
