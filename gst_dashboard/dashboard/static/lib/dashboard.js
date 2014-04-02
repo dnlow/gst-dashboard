@@ -230,9 +230,9 @@
             case "Fire":
                 iconPath = "/static/img/markers/marker-fire.png";
                 break;
-            case "Law Enforcement":
-                iconPath = "/static/img/markers/marker-lawenforcement.png";
-                break;
+            //case "Law Enforcement":
+            //    iconPath = "/static/img/markers/marker-lawenforcement.png";
+            //    break;
             }
 
             marker = L.marker(latLng, {
@@ -322,9 +322,9 @@
             case "Fire":
                 $type.addClass("label-fire");
                 break;
-            case "Law Enforcement":
-                $type.addClass("label-lawenforcement");
-                break;
+            //case "Law Enforcement":
+            //    $type.addClass("label-lawenforcement");
+            //    break;
             }
             $row.append($type);
             $type.wrap("<td>");

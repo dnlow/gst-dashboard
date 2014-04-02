@@ -15,6 +15,9 @@ def json_incident(request):
 
     incidents = Incident.objects
 
+    # as per an internal investigation, ignore LE incidents
+    incidents = incidents.exclude(category="Law Enforcement")
+
     incidentid = request.GET.get("incidentid", False)
     if incidentid:
         incidents = incidents.filter(incident_id__icontains=incidentid)
