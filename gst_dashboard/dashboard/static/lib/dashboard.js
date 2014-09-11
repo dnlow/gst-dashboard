@@ -166,7 +166,7 @@
 
         var that = this;
 
-        var mbTerrainUrl = "slugis.map-ioviud0r";
+        var mbOutdoor = "slugis.map-ioviud0r";
         var mbSat = "slugis.da0a550c";
         var mbOsmbright2 = "slugis.bbd863d8";
 
@@ -175,10 +175,11 @@
         that.control.addBaseLayer(satellite, "Satellite");
 
         // Add 'Terrain' layer
-        var terrain = L.mapbox.tileLayer(mbTerrainUrl).addTo(this.map);
-        that.control.addBaseLayer(terrain, "Terrain");
+        var outdoor = L.mapbox.tileLayer(mbOutdoor).addTo(this.map);
+        that.control.addBaseLayer(outdoor, "Terrain");
 
         // Add 'Streets' layer
+        var street = L.mapbox.tileLayer(mbOsmbright2).addTo(this.map);
         this.control.addBaseLayer(mbOsmbright2, "Streets");
 
         // Add incidents
