@@ -180,7 +180,7 @@
 
         // Add 'Streets' layer
         var street = L.mapbox.tileLayer(mbOsmbright2).addTo(this.map);
-        this.control.addBaseLayer(mbOsmbright2, "Streets");
+        this.control.addBaseLayer(street, "Streets");
 
         // Add incidents
         this.incsLayer = L.layerGroup().addTo(this.map);
