@@ -166,7 +166,7 @@
 
         var that = this;
 
-        var mbOutdoor = "slugis.map-ioviud0r";
+        var mbOutdoor = "slugis.25db57b7";
         var mbSat = "slugis.da0a550c";
         var mbOsmbright2 = "slugis.bbd863d8";
 
