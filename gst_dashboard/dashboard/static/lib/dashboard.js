@@ -166,15 +166,12 @@
 
         var that = this;
 
-        var mbStreetsUrl = "slugis.map-gmw5ak5f";
         var mbTerrainUrl = "slugis.map-ioviud0r";
-
-        var mqSat = L.tileLayer('http://gis.slocounty.ca.gov/arcgis/rest/services/Aerials/2011_Combined_WGSWMAS/MapServer/tile/{z}/{y}/{x}');
-        var mqOsm = L.tileLayer('http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg');
+        var mbSat = "slugis.da0a550c";
+        var mbOsmbright2 = "slugis.bbd863d8";
 
         // Add 'Satellite' layer
-        var streetsOverlay = L.mapbox.tileLayer(mbStreetsUrl);
-        var satellite = L.layerGroup([mqSat, streetsOverlay]);
+        var satellite = L.mapbox.tileLayer(mbSat).addTo(this.map);
         that.control.addBaseLayer(satellite, "Satellite");
 
         // Add 'Terrain' layer
@@ -182,7 +179,7 @@
         that.control.addBaseLayer(terrain, "Terrain");
 
         // Add 'Streets' layer
-        this.control.addBaseLayer(mqOsm, "Streets");
+        this.control.addBaseLayer(mbOsmbright2, "Streets");
 
         // Add incidents
         this.incsLayer = L.layerGroup().addTo(this.map);
