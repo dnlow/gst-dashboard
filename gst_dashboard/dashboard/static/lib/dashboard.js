@@ -146,7 +146,7 @@
             'center': [35.37, -120.6],
             'zoom': 10,
             'attributionControl': false,
-            'maxZoom': 18,
+            'maxZoom': 20,
         });
 
         this.addControls();
