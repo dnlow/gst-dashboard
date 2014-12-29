@@ -171,11 +171,11 @@
         var mbOsmbright2 = "slugis.bbd863d8";
 
         // Add 'Satellite' layer
-        var satellite = L.mapbox.tileLayer(mbSat).addTo(this.map);
+        var satellite = L.mapbox.tileLayer(mbSat);
         that.control.addBaseLayer(satellite, "Satellite");
 
         // Add 'Terrain' layer
-        var outdoor = L.mapbox.tileLayer(mbOutdoor).addTo(this.map);
+        var outdoor = L.mapbox.tileLayer(mbOutdoor);
         that.control.addBaseLayer(outdoor, "Terrain");
 
         // Add 'Streets' layer
