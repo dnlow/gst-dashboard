@@ -244,7 +244,7 @@
                 })
             });
 
-            marker.bindPopup([inc.address, inc.details].join("<br>"));
+            marker.bindPopup([inc.incidentId, inc.address, inc.details, inc.datetime.getDate() + " " + inc.datetime.getTime()].join("<br>"));
             that.incsLayer.addLayer(marker);
             that.activeIncs[inc.eventId] = marker;
         });
