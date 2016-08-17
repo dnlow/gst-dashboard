@@ -143,6 +143,7 @@
 
         this.markers = [];
         this.map = L.map('map', {
+            'layers': MQ.mapLayer(),
             'center': [35.37, -120.6],
             'zoom': 10,
             'attributionControl': false,
@@ -166,6 +167,7 @@
 
         var that = this;
 
+        var mqMap = MQ.mapLayer();
         var mbOutdoor = "slugis.25db57b7";
         var mbSat = "slugis.da0a550c";
         var hydrantBright2 = "slugis.5c581e3e";
@@ -179,7 +181,7 @@
         that.control.addBaseLayer(outdoor, "Terrain");
 
         // Add 'Streets' layer
-        var street = L.mapbox.tileLayer(hydrantBright2).addTo(this.map);
+        var street = L.mapbox.tileLayer(mqMap);
         this.control.addBaseLayer(street, "Streets");
 
         // Add incidents
