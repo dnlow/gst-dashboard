@@ -147,6 +147,7 @@
             'zoom': 10,
             'attributionControl': false,
             'maxZoom': 20,
+            'accessToken': 'pk.eyJ1Ijoic2x1Z2lzIiwiYSI6IlB5TlZENVUifQ.Z597Ia0qffZlYcGpbJtzTA'
         });
 
         this.addControls();
@@ -167,7 +168,7 @@
         var that = this;
 
         var mbOutdoor = "slugis.25db57b7";
-        var mbSat = "slugis.da0a550c";
+        var mbSat = "mapbox.satellite";
         var hydrantBright2 = "slugis.5c581e3e";
 
         // Add 'Satellite' layer
