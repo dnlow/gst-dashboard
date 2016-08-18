@@ -147,6 +147,7 @@
             'zoom': 10,
             'attributionControl': false,
             'maxZoom': 20,
+            'accessToken': 'pk.eyJ1Ijoic2x1Z2lzIiwiYSI6IlB5TlZENVUifQ.Z597Ia0qffZlYcGpbJtzTA'
         });
 
         this.addControls();
