@@ -167,12 +167,12 @@
         var that = this;
 
         var mbOutdoor = "slugis.25db57b7";
-        var mbSat = "slugis.da0a550c";
+        //var mbSat = "slugis.da0a550c";
         var hydrantBright2 = "slugis.5c581e3e";
 
-        // Add 'Satellite' layer
-        var satellite = L.mapbox.tileLayer(mbSat);
-        that.control.addBaseLayer(satellite, "Satellite");
+        // Add 'Satellite' layer, UPDATE: this layer was deleted from the account - so disabling it
+        //var satellite = L.mapbox.tileLayer(mbSat);
+        //that.control.addBaseLayer(satellite, "Satellite");
 
         // Add 'Terrain' layer
         var outdoor = L.mapbox.tileLayer(mbOutdoor);
