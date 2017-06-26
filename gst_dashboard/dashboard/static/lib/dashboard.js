@@ -31,7 +31,7 @@
         this.datetime = new DT(geojson.properties.time);
         this.details = geojson.properties.details;
         this.jrsdtn = geojson.properties.jrsdtn;
-        this.address = geojson.properties.address;
+        //this.address = geojson.properties.address;
         this.category = geojson.properties.category;
         this.incidentId = geojson.properties.incident_id;
         this.eventId = geojson.properties.event_id;
@@ -46,7 +46,7 @@
         var html = "";
 
         html += "<tr><td>Location</td>";
-        html += "<td>" + inc.address + "</td></tr>";
+       //html += "<td>" + inc.address + "</td></tr>";
 
         html += "<tr><td>Longitude</td>";
         html += "<td>" + inc.lnglat[0] + "</td></tr>";
